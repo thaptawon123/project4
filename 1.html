@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+
+<html lang="th"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Campus Nutrition Analyzer - Restaurant Selection</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#dadadb",
+                        "inverse-on-surface": "#f0f1f2",
+                        "surface-container": "#eeeeef",
+                        "on-primary-fixed": "#1b1b1b",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-container": "#616363",
+                        "surface-bright": "#f9f9fa",
+                        "outline": "#7e7576",
+                        "tertiary-fixed-dim": "#c6c5cf",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#474747",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "surface-tint": "#5e5e5e",
+                        "outline-variant": "#cfc4c5",
+                        "on-surface-variant": "#4c4546",
+                        "on-primary-container": "#848484",
+                        "primary-fixed": "#e2e2e2",
+                        "on-tertiary-fixed-variant": "#46464e",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-tertiary-container": "#83838c",
+                        "surface-container-highest": "#e2e2e3",
+                        "surface-container-high": "#e8e8e9",
+                        "surface": "#f9f9fa",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#000000",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#454747",
+                        "tertiary-container": "#1a1b22",
+                        "on-tertiary-fixed": "#1a1b22",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "primary-container": "#1b1b1b",
+                        "tertiary-fixed": "#e3e1ec",
+                        "error-container": "#ffdad6",
+                        "primary": "#000000",
+                        "inverse-surface": "#2f3132",
+                        "inverse-primary": "#c6c6c6",
+                        "on-background": "#1a1c1d",
+                        "on-error-container": "#93000a",
+                        "background": "#f9f9fa",
+                        "on-surface": "#1a1c1d",
+                        "surface-variant": "#e2e2e3",
+                        "secondary-container": "#dfe0e0",
+                        "surface-container-low": "#f3f3f4",
+                        "secondary": "#5d5f5f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "3xl": "1.5rem"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "card-gap": "20px",
+                        "base": "8px",
+                        "container-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Kanit"],
+                        "headline-lg": ["Kanit"],
+                        "stats-num": ["Kanit"],
+                        "body-md": ["Kanit"],
+                        "label-caps": ["Kanit"],
+                        "headline-lg-mobile": ["Kanit"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "stats-num": ["24px", { "lineHeight": "1", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .liquid-shadow {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        }
+        .liquid-card {
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05), 0 0 20px rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+        .liquid-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1), 0 0 30px rgba(255, 255, 255, 0.6);
+        }
+        .restaurant-card.hidden {
+            display: none !important;
+        }
+        .filter-btn.active {
+            background-color: #000000 !important;
+            color: #ffffff !important;
+        }
+        .filter-btn:not(.active) {
+            background-color: rgba(255, 255, 255, 0.4) !important;
+            color: #000000 !important;
+        }
+        .ambient-blob {
+            position: absolute;
+            background: #E0E0E0;
+            filter: blur(60px);
+            border-radius: 50%;
+            z-index: -1;
+            animation: float 20s infinite ease-in-out alternate;
+        }
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, -50px) scale(1.1); }
+            100% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen relative overflow-x-hidden selection:bg-primary selection:text-white">
+<!-- Ambient Background Blobs -->
+<div class="fixed inset-0 overflow-hidden pointer-events-none z-[-1]">
+<div class="ambient-blob w-[600px] h-[600px] top-[-100px] left-[-100px] opacity-70"></div>
+<div class="ambient-blob w-[500px] h-[500px] bottom-[10%] right-[-50px] opacity-60" style="animation-delay: -5s;"></div>
+<div class="ambient-blob w-[400px] h-[400px] top-[40%] left-[20%] opacity-50" style="animation-delay: -10s;"></div>
+</div>
+<!-- TopNavBar (Shared Component) -->
+<header class="fixed top-5 left-1/2 -translate-x-1/2 w-[calc(100%-40px)] max-w-7xl rounded-full bg-white/80 dark:bg-black/80 backdrop-blur-xl border-[1.5px] border-black dark:border-white/20 shadow-[0_20px_40px_rgba(0,0,0,0.05)] z-50 transition-all duration-300">
+<div class="flex justify-between items-center px-8 py-3 z-50">
+<div class="font-headline-lg text-headline-lg tracking-tighter text-primary dark:text-on-primary-fixed md:block hidden">
+                Campus Nutrition Analyzer
+            </div>
+<div class="font-headline-lg-mobile text-headline-lg-mobile tracking-tighter text-primary dark:text-on-primary-fixed md:hidden block">
+                CNA
+            </div>
+<nav class="hidden md:flex items-center gap-6">
+<!-- Suppressed nav items as this is a specific flow, but keeping structure for layout balance if needed, though instructions suggest suppressing shell if focused. Assuming it's a top level destination for this demo -->
+</nav>
+<div class="flex items-center gap-4">
+<a class="text-primary dark:text-inverse-primary font-body-md text-body-md font-semibold hover:scale-105 transition-transform duration-300" href="4.html">แดชบอร์ด</a>
+<a class="text-primary dark:text-inverse-primary font-body-md text-body-md font-semibold hover:scale-105 transition-transform duration-300" href="add-food.html">เพิ่มอาหาร</a>
+<a class="text-primary dark:text-inverse-primary font-body-md text-body-md font-semibold hover:scale-105 transition-transform duration-300" href="history.html">ประวัติ</a>
+<a class="text-primary dark:text-inverse-primary font-body-md text-body-md font-semibold hover:scale-105 transition-transform duration-300" href="profile.html">โปรไฟล์</a>
+<button class="text-primary dark:text-inverse-primary font-body-md text-body-md font-semibold hover:scale-105 transition-transform duration-300" id="login-btn">
+                    เข้าสู่ระบบ / สมัครสมาชิก
+                </button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-[140px] pb-24 px-container-padding max-w-[1200px] mx-auto min-h-[calc(100vh-200px)]">
+<!-- Header Section -->
+<section class="mb-12 text-center flex flex-col items-center">
+<h1 class="font-display-lg text-display-lg text-primary mb-6">ค้นหาร้านอาหาร</h1>
+<!-- Search & Filter Area (Liquid Style) -->
+<div class="w-full max-w-2xl flex flex-col gap-6 items-center bg-white/15 backdrop-blur-[40px] p-8 rounded-[2rem] border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.05),0_0_20px_rgba(255,255,255,0.4)]">
+<!-- Search Bar -->
+<div class="relative w-full max-w-md group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-secondary z-10">search</span>
+<input class="w-full h-12 pl-12 pr-4 rounded-full bg-white/20 backdrop-blur-md border-[1.5px] border-outline-variant focus:border-primary focus:ring-0 transition-all duration-300 text-body-md font-body-md shadow-sm group-hover:shadow-md outline-none placeholder:text-secondary placeholder:font-body-md" placeholder="ค้นหาชื่อร้าน หรือ เมนู..." type="text"/>
+</div>
+<!-- Filter Tags -->
+<div class="flex flex-wrap justify-center gap-3">
+<button type="button" class="filter-btn px-5 py-2 rounded-full bg-primary text-white font-label-caps text-label-caps hover:scale-105 transition-transform duration-300 shadow-md" data-category="all">
+                        ทั้งหมด
+                    </button>
+<button type="button" class="filter-btn px-5 py-2 rounded-full bg-white/40 text-primary border border-white/50 shadow-sm font-label-caps text-label-caps hover:bg-white/60 transition-colors duration-300" data-category="โรงอาหารกลาง">
+                        โรงอาหารกลาง
+                    </button>
+<button type="button" class="filter-btn px-5 py-2 rounded-full bg-white/40 text-primary border border-white/50 shadow-sm font-label-caps text-label-caps hover:bg-white/60 transition-colors duration-300" data-category="ตึกวิทยาศาสตร์">
+                        ตึกวิทยาศาสตร์
+                    </button>
+<button type="button" class="filter-btn px-5 py-2 rounded-full bg-white/40 text-primary border border-white/50 shadow-sm font-label-caps text-label-caps hover:bg-white/60 transition-colors duration-300" data-category="อาคารเรียนรวม">
+                        อาคารเรียนรวม
+                    </button>
+</div>
+</section>
+<!-- Restaurant Grid (Bento/Liquid Cards) -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-card-gap">
+<!-- Card 1 -->
+<a class="restaurant-card liquid-card group relative overflow-hidden flex flex-col h-[380px] block cursor-pointer" href="2.html?restaurant=pra-daeng" data-restaurant-id="pra-daeng" data-category="โรงอาหารกลาง" data-restaurant-name="ร้านกะเพราป้าแดง" data-restaurant-location="โรงอาหารกลาง" data-restaurant-type="อาหารตามสั่ง">
+<div class="h-48 w-full relative overflow-hidden bg-surface-dim/30">
+<div class="absolute inset-0 bg-cover bg-center grayscale opacity-80 group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="A high-contrast black and white photograph of a bustling modern Thai street food stall serving Pad Krapow. The composition is sleek and minimalist, focusing on the wok and ingredients with deep shadows and crisp highlights. The aesthetic is clean, professional, and slightly clinical, fitting a health-conscious academic context." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCv_93QGH6pZMEhfvzLX_82SvyYPRxtSuHhqeVhN3lA61nEbWvReKPNSDLfd5IuVz4VhUUL9xwtdCtDQrKJsbEEkW113iLm6HQH6Dk0SUE2t3ItrCfgfrtHkUktEnBydmxbEEd-jmErLAtLkwd1jrLOIVJ2a4q609MxemmvPY5fWH5cdlN1tw4Uf9IJ4tBE_lUBYRow0zGgFivomiHSGyzxY-qslRH1m8Ey7B9KxxhplGvzzHd_D_Vc')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+<div class="absolute top-4 right-4 bg-white/30 backdrop-blur-md px-3 py-1 rounded-full border border-white/40 shadow-[0_4px_10px_rgba(0,0,0,0.1)]">
+<span class="font-label-caps text-label-caps text-white">โรงอาหารกลาง</span>
+</div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between relative z-10 bg-white/10">
+<div>
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-2 line-clamp-1">ร้านกะเพราป้าแดง</h3>
+<p class="font-body-md text-body-md text-secondary line-clamp-2">อาหารตามสั่ง รสจัดจ้าน ควบคุมโซเดียมได้</p>
+</div>
+<div class="mt-4 flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[18px]">restaurant</span>
+<span class="font-label-caps text-label-caps">อาหารตามสั่ง</span>
+</div>
+</div>
+<!-- Hover Action -->
+<div class="absolute inset-0 bg-white/40 backdrop-blur-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 border border-white/50 rounded-1.5xl">
+<div class="px-8 py-3 rounded-full bg-primary text-white font-label-caps text-label-caps hover:scale-105 hover:shadow-[0_10px_20px_rgba(0,0,0,0.2)] transition-all duration-300">
+                        ดูเมนูอาหาร
+                    </div>
+</div>
+</a>
+<!-- Card 2 -->
+<a class="restaurant-card liquid-card group relative overflow-hidden flex flex-col h-[380px] block cursor-pointer" href="2.html?restaurant=green-bowl" data-restaurant-id="green-bowl" data-category="ตึกวิทยาศาสตร์" data-restaurant-name="Green Bowl Salad" data-restaurant-location="ตึกวิทยาศาสตร์" data-restaurant-type="อาหารเพื่อสุขภาพ">
+<div class="h-48 w-full relative overflow-hidden bg-surface-dim/30">
+<div class="absolute inset-0 bg-cover bg-center grayscale opacity-80 group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="A minimalist monochrome top-down view of a modern salad bar in a clean, brightly lit cafeteria setting. Crisp greens and fresh vegetables are arranged in precise geometric containers. The lighting is soft but high-key, creating a pristine, hygienic, and health-focused atmosphere with deep blacks and stark whites." data-row="2" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCOfiRJoytu2SigMkulzr5CDiXr8cNoIsXyfjNHH8qDpKlLtzGIfJUYuSng37_wynnYlU7Vgy8tg1wkiaOU-S3Hi7_XqJi3YbJPrivVuIR7IdvkPmESUSu05XDkygByD7anoWUUtYZjRysZgNirATKOBfM7iFCyMhgfcKlrm1rYXhCxehMHWl3St01G-UkCPfwpRDIHBR0ai6r_Mhi1RG4FNwyY2PFfYv1qyUB4s3mo1JbQP0wf5ECE')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+<div class="absolute top-4 right-4 bg-white/30 backdrop-blur-md px-3 py-1 rounded-full border border-white/40 shadow-[0_4px_10px_rgba(0,0,0,0.1)]">
+<span class="font-label-caps text-label-caps text-white">ตึกวิทยาศาสตร์</span>
+</div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between relative z-10 bg-white/10">
+<div>
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-2 line-clamp-1">Green Bowl Salad</h3>
+<p class="font-body-md text-body-md text-secondary line-clamp-2">สลัดผักออร์แกนิค พร้อมน้ำสลัดโฮมเมดไขมันต่ำ</p>
+</div>
+<div class="mt-4 flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[18px]">eco</span>
+<span class="font-label-caps text-label-caps">อาหารเพื่อสุขภาพ</span>
+</div>
+</div>
+<!-- Hover Action -->
+<div class="absolute inset-0 bg-white/40 backdrop-blur-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 border border-white/50 rounded-1.5xl">
+<div class="px-8 py-3 rounded-full bg-primary text-white font-label-caps text-label-caps hover:scale-105 hover:shadow-[0_10px_20px_rgba(0,0,0,0.2)] transition-all duration-300">
+                        ดูเมนูอาหาร
+                    </div>
+</div>
+</a>
+<!-- Card 3 -->
+<a class="restaurant-card liquid-card group relative overflow-hidden flex flex-col h-[380px] block cursor-pointer" href="2.html?restaurant=noodle-boat" data-restaurant-id="noodle-boat" data-category="อาคารเรียนรวม" data-restaurant-name="เตี๋ยวเรือรสเด็ด" data-restaurant-location="อาคารเรียนรวม" data-restaurant-type="ก๋วยเตี๋ยว">
+<div class="h-48 w-full relative overflow-hidden bg-surface-dim/30">
+<div class="absolute inset-0 bg-cover bg-center grayscale opacity-80 group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="A striking black and white close-up of a steaming bowl of Asian noodles. The composition uses dramatic lighting to highlight the texture of the noodles and broth against a dark background. The scene feels modern, culinary, and precise, aligning with an avant-garde academic food tracker." data-row="3" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAOKAICFOoz8eKS6BqOx7YFfGTdEGYS8kKbawCB8OUMoaJnz71Vkq87P3YjmgGIN1nsIvmqxB3k1RLoG1mdjOiEnOdcqt7u9s-egNboHvu0HAwyYkVngARMUPoze5YVZuO0_G0zmvoqdI3EWqWevJqwBHZtI4POy0v9IPL1ACCJ6Ka3ut5NrYw6pHkBbCKd62KZ5XLaoFGcUwAkiaRxu5P2kMKHc2a7EwRWm0IO8ZWaPfcKspEA8sp3')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+<div class="absolute top-4 right-4 bg-white/30 backdrop-blur-md px-3 py-1 rounded-full border border-white/40 shadow-[0_4px_10px rgba(0,0,0,0.1)]">
+<span class="font-label-caps text-label-caps text-white">อาคารเรียนรวม</span>
+</div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between relative z-10 bg-white/10">
+<div>
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-2 line-clamp-1">เตี๋ยวเรือรสเด็ด</h3>
+<p class="font-body-md text-body-md text-secondary line-clamp-2">ก๋วยเตี๋ยวเรือน้ำตกเข้มข้น มีตัวเลือกเส้นบุก</p>
+</div>
+<div class="mt-4 flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[18px]">ramen_dining</span>
+<span class="font-label-caps text-label-caps">ก๋วยเตี๋ยว</span>
+</div>
+</div>
+<!-- Hover Action -->
+<div class="absolute inset-0 bg-white/40 backdrop-blur-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 border border-white/50 rounded-1.5xl">
+<div class="px-8 py-3 rounded-full bg-primary text-white font-label-caps text-label-caps hover:scale-105 hover:shadow-[0_10px_20px rgba(0,0,0,0.2)] transition-all duration-300">
+                        ดูเมนูอาหาร
+                    </div>
+</div>
+</a>
+<!-- Card 4 - โรงอาหารกลาง -->
+<a class="restaurant-card liquid-card group relative overflow-hidden flex flex-col h-[380px] block cursor-pointer" href="2.html?restaurant=central-cafe" data-restaurant-id="central-cafe" data-category="โรงอาหารกลาง" data-restaurant-name="โรงอาหารกลาง" data-restaurant-location="โรงอาหารกลาง" data-restaurant-type="อาหารหลากหลาย">
+<div class="h-48 w-full relative overflow-hidden bg-surface-dim/30">
+<div class="absolute inset-0 bg-cover bg-center grayscale opacity-80 group-hover:scale-105 transition-transform duration-700 ease-out" style="background-image: url('https://via.placeholder.com/400x300?text=Central+Cafeteria')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+<div class="absolute top-4 right-4 bg-white/30 backdrop-blur-md px-3 py-1 rounded-full border border-white/40 shadow-[0_4px_10px rgba(0,0,0,0.1)]">
+<span class="font-label-caps text-label-caps text-white">โรงอาหารกลาง</span>
+</div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between relative z-10 bg-white/10">
+<div>
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-2 line-clamp-1">โรงอาหารกลาง</h3>
+<p class="font-body-md text-body-md text-secondary line-clamp-2">อาหารไทย จีน ญี่ปุ่น และอาหารตะวันตก</p>
+</div>
+<div class="mt-4 flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[18px]">restaurant_menu</span>
+<span class="font-label-caps text-label-caps">อาหารหลากหลาย</span>
+</div>
+</div>
+<!-- Hover Action -->
+<div class="absolute inset-0 bg-white/40 backdrop-blur-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 border border-white/50 rounded-1.5xl">
+<div class="px-8 py-3 rounded-full bg-primary text-white font-label-caps text-label-caps hover:scale-105 hover:shadow-[0_10px_20px rgba(0,0,0,0.2)] transition-all duration-300">
+                        ดูเมนูอาหาร
+                    </div>
+</div>
+</a>
+<!-- Card 5 - ตึกวิทยาศาสตร์ -->
+<a class="restaurant-card liquid-card group relative overflow-hidden flex flex-col h-[380px] block cursor-pointer" href="2.html?restaurant=science-cafe" data-restaurant-id="science-cafe" data-category="ตึกวิทยาศาสตร์" data-restaurant-name="ตึกวิทยาศาสตร์" data-restaurant-location="ตึกวิทยาศาสตร์" data-restaurant-type="อาหารเพื่อสุขภาพ">
+<div class="h-48 w-full relative overflow-hidden bg-surface-dim/30">
+<div class="absolute inset-0 bg-cover bg-center grayscale opacity-80 group-hover:scale-105 transition-transform duration-700 ease-out" style="background-image: url('https://via.placeholder.com/400x300?text=Science+Building')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+<div class="absolute top-4 right-4 bg-white/30 backdrop-blur-md px-3 py-1 rounded-full border border-white/40 shadow-[0_4px_10px rgba(0,0,0,0.1)]">
+<span class="font-label-caps text-label-caps text-white">ตึกวิทยาศาสตร์</span>
+</div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between relative z-10 bg-white/10">
+<div>
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-2 line-clamp-1">ตึกวิทยาศาสตร์</h3>
+<p class="font-body-md text-body-md text-secondary line-clamp-2">อาหารเพื่อสุขภาพ สลัด และเครื่องดื่ม</p>
+</div>
+<div class="mt-4 flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[18px]">science</span>
+<span class="font-label-caps text-label-caps">อาหารเพื่อสุขภาพ</span>
+</div>
+</div>
+<!-- Hover Action -->
+<div class="absolute inset-0 bg-white/40 backdrop-blur-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 border border-white/50 rounded-1.5xl">
+<div class="px-8 py-3 rounded-full bg-primary text-white font-label-caps text-label-caps hover:scale-105 hover:shadow-[0_10px_20px rgba(0,0,0,0.2)] transition-all duration-300">
+                        ดูเมนูอาหาร
+                    </div>
+</div>
+</a>
+<!-- Card 6 - อาคารเรียนรวม -->
+<a class="restaurant-card liquid-card group relative overflow-hidden flex flex-col h-[380px] block cursor-pointer" href="2.html?restaurant=academic-cafe" data-restaurant-id="academic-cafe" data-category="อาคารเรียนรวม" data-restaurant-name="อาคารเรียนรวม" data-restaurant-location="อาคารเรียนรวม" data-restaurant-type="อาหารจานด่วน">
+<div class="h-48 w-full relative overflow-hidden bg-surface-dim/30">
+<div class="absolute inset-0 bg-cover bg-center grayscale opacity-80 group-hover:scale-105 transition-transform duration-700 ease-out" style="background-image: url('https://via.placeholder.com/400x300?text=Academic+Building')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+<div class="absolute top-4 right-4 bg-white/30 backdrop-blur-md px-3 py-1 rounded-full border border-white/40 shadow-[0_4px_10px rgba(0,0,0,0.1)]">
+<span class="font-label-caps text-label-caps text-white">อาคารเรียนรวม</span>
+</div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between relative z-10 bg-white/10">
+<div>
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-2 line-clamp-1">อาคารเรียนรวม</h3>
+<p class="font-body-md text-body-md text-secondary line-clamp-2">อาหารจานด่วน ข้าวกล่อง และเครื่องดื่ม</p>
+</div>
+<div class="mt-4 flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[18px]">lunch_dining</span>
+<span class="font-label-caps text-label-caps">อาหารจานด่วน</span>
+</div>
+</div>
+<!-- Hover Action -->
+<div class="absolute inset-0 bg-white/40 backdrop-blur-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 border border-white/50 rounded-1.5xl">
+<div class="px-8 py-3 rounded-full bg-primary text-white font-label-caps text-label-caps hover:scale-105 hover:shadow-[0_10px_20px rgba(0,0,0,0.2)] transition-all duration-300">
+                        ดูเมนูอาหาร
+                    </div>
+</div>
+</a>
+<!-- Card 4 -->
+<a class="restaurant-card liquid-card group relative overflow-hidden flex flex-col h-[380px] block cursor-pointer" href="2.html?restaurant=caffeine-lab" data-restaurant-id="caffeine-lab" data-category="ห้องสมุด" data-restaurant-name="Caffeine Lab" data-restaurant-location="ห้องสมุด" data-restaurant-type="เครื่องดื่ม / คาเฟ่">
+<div class="h-48 w-full relative overflow-hidden bg-surface-dim/30">
+<div class="absolute inset-0 bg-cover bg-center grayscale opacity-80 group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="An abstract, high-contrast monochrome image showing a minimalist coffee shop counter. A barista is preparing a pour-over coffee. The scene is rendered in stark black and white with subtle glass reflections, emphasizing precision, energy, and a clean modern aesthetic appropriate for a university setting." data-row="4" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAN8diuNQG-s792l06ucEH3cm5oyRcw3ha_I4MYQeLozjLYQch9rL458eR7_Hv7bs0O0AUG5PROK5k5z2WVDX5Yq67r7EEEPAUE8QRRL0c3aUcjX8H1_tJWis5lwz7TWrgLmVAiai1y31Gfj-fZYAkSP4CP5NJkteg0gkARsc0Iu8v9Ko3ejuyCuhTPmmbtatvshEj9pI-yfEOMdNlORPjUBkkiqkaWYmf2NqPj9AKjbvWHgNHJBoCY')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+<div class="absolute top-4 right-4 bg-white/30 backdrop-blur-md px-3 py-1 rounded-full border border-white/40 shadow-[0_4px_10px_rgba(0,0,0,0.1)]">
+<span class="font-label-caps text-label-caps text-white">ห้องสมุด</span>
+</div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between relative z-10 bg-white/10">
+<div>
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-2 line-clamp-1">Caffeine Lab</h3>
+<p class="font-body-md text-body-md text-secondary line-clamp-2">กาแฟคั่วบอดี้แน่น และเครื่องดื่มไร้น้ำตาล</p>
+</div>
+<div class="mt-4 flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[18px]">local_cafe</span>
+<span class="font-label-caps text-label-caps">เครื่องดื่ม / คาเฟ่</span>
+</div>
+</div>
+<!-- Hover Action -->
+<div class="absolute inset-0 bg-white/40 backdrop-blur-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 border border-white/50 rounded-1.5xl">
+<div class="px-8 py-3 rounded-full bg-primary text-white font-label-caps text-label-caps hover:scale-105 hover:shadow-[0_10px_20px_rgba(0,0,0,0.2)] transition-all duration-300">
+                        ดูเมนูอาหาร
+                    </div>
+</div>
+</a>
+</section>
+<!-- Load More -->
+<div class="mt-12 flex justify-center">
+<button class="px-8 py-3 rounded-full bg-white text-primary border-[1.5px] border-black font-label-caps text-label-caps hover:bg-surface-container-low hover:scale-105 transition-all duration-300">
+                โหลดร้านอาหารเพิ่มเติม
+            </button>
+</div>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="w-full py-12 bg-surface dark:bg-surface-container-highest border-t border-outline-variant flex flex-col md:flex-row justify-between items-center px-container-padding max-w-7xl mx-auto gap-8">
+<div class="font-headline-lg-mobile text-headline-lg-mobile text-primary">
+            Campus Nutrition Analyzer
+        </div>
+<nav class="flex flex-wrap justify-center gap-6">
+<a class="font-label-caps text-label-caps text-secondary dark:text-on-secondary-container hover:text-primary dark:hover:text-white transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-caps text-label-caps text-secondary dark:text-on-secondary-container hover:text-primary dark:hover:text-white transition-colors" href="#">Terms of Service</a>
+<a class="font-label-caps text-label-caps text-secondary dark:text-on-secondary-container hover:text-primary dark:hover:text-white transition-colors" href="#">Contact Support</a>
+</nav>
+<div class="font-label-caps text-label-caps text-secondary dark:text-on-secondary-container text-center md:text-right">
+            © 2024 Campus Nutrition Analyzer. All rights reserved.
+        </div>
+</footer>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const restaurantCards = document.querySelectorAll('.restaurant-card');
+
+        filterButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach((filterButton) => {
+                    filterButton.classList.toggle('active', filterButton === button);
+                });
+
+                const selectedCategory = button.dataset.category;
+                restaurantCards.forEach((card) => {
+                    const matchesCategory = selectedCategory === 'all' || card.dataset.category === selectedCategory;
+                    card.classList.toggle('hidden', !matchesCategory);
+                });
+            });
+        });
+
+        document.querySelectorAll('[data-restaurant-id]').forEach((card) => {
+            card.addEventListener('click', () => {
+                const restaurant = {
+                    id: card.dataset.restaurantId,
+                    name: card.dataset.restaurantName,
+                    location: card.dataset.restaurantLocation,
+                    type: card.dataset.restaurantType
+                };
+                localStorage.setItem('selectedRestaurant', JSON.stringify(restaurant));
+            });
+        });
+
+        // Handle login button
+        const loginBtn = document.getElementById('login-btn');
+        const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+        
+        if (currentUser.email) {
+            loginBtn.textContent = 'ออกจากระบบ';
+            loginBtn.addEventListener('click', () => {
+                localStorage.removeItem('currentUser');
+                window.location.reload();
+            });
+        } else {
+            loginBtn.addEventListener('click', () => {
+                window.location.href = 'login.html';
+            });
+        }
+    });
+</script>
+</body></html>

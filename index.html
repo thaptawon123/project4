@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html lang="th"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Campus Nutrition Analyzer - Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-dim": "#dadadb",
+                      "inverse-on-surface": "#f0f1f2",
+                      "surface-container": "#eeeeef",
+                      "on-primary-fixed": "#1b1b1b",
+                      "on-secondary-fixed": "#1a1c1c",
+                      "on-secondary": "#ffffff",
+                      "on-secondary-container": "#616363",
+                      "surface-bright": "#f9f9fa",
+                      "outline": "#7e7576",
+                      "tertiary-fixed-dim": "#c6c5cf",
+                      "on-error": "#ffffff",
+                      "on-primary-fixed-variant": "#474747",
+                      "primary-fixed-dim": "#c6c6c6",
+                      "surface-tint": "#5e5e5e",
+                      "outline-variant": "#cfc4c5",
+                      "on-surface-variant": "#4c4546",
+                      "on-primary-container": "#848484",
+                      "primary-fixed": "#e2e2e2",
+                      "on-tertiary-fixed-variant": "#46464e",
+                      "on-tertiary": "#ffffff",
+                      "error": "#ba1a1a",
+                      "secondary-fixed": "#e2e2e2",
+                      "on-tertiary-container": "#83838c",
+                      "surface-container-highest": "#e2e2e3",
+                      "surface-container-high": "#e8e8e9",
+                      "surface": "#f9f9fa",
+                      "on-primary": "#ffffff",
+                      "tertiary": "#000000",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-fixed-variant": "#454747",
+                      "tertiary-container": "#1a1b22",
+                      "on-tertiary-fixed": "#1a1b22",
+                      "secondary-fixed-dim": "#c6c6c7",
+                      "primary-container": "#1b1b1b",
+                      "tertiary-fixed": "#e3e1ec",
+                      "error-container": "#ffdad6",
+                      "primary": "#000000",
+                      "inverse-surface": "#2f3132",
+                      "inverse-primary": "#c6c6c6",
+                      "on-background": "#1a1c1d",
+                      "on-error-container": "#93000a",
+                      "background": "#f9f9fa",
+                      "on-surface": "#1a1c1d",
+                      "surface-variant": "#e2e2e3",
+                      "secondary-container": "#dfe0e0",
+                      "surface-container-low": "#f3f3f4",
+                      "secondary": "#5d5f5f"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px",
+                      "3xl": "1.5rem"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "card-gap": "20px",
+                      "base": "8px",
+                      "container-padding": "24px"
+              },
+              "fontFamily": {
+                      "display-lg": [
+                              "Kanit"
+                      ],
+                      "headline-lg": [
+                              "Kanit"
+                      ],
+                      "stats-num": [
+                              "Kanit"
+                      ],
+                      "body-md": [
+                              "Kanit"
+                      ],
+                      "label-caps": [
+                              "Kanit"
+                      ],
+                      "headline-lg-mobile": [
+                              "Kanit"
+                      ]
+              },
+              "fontSize": {
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.04em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "stats-num": [
+                              "24px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "letterSpacing": "0em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        body {
+            background-color: #F4F4F5;
+            overflow-x: hidden;
+            font-family: 'Kanit', sans-serif;
+        }
+
+        /* Abstract Liquid Background Shapes */
+        .blob {
+            position: absolute;
+            filter: blur(60px);
+            z-index: -1;
+            background-color: #E0E0E0;
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out alternate;
+        }
+
+        .blob-1 {
+            width: 600px;
+            height: 600px;
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            width: 500px;
+            height: 500px;
+            bottom: -50px;
+            right: -50px;
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(50px, 30px) scale(1.1); }
+            100% { transform: translate(-30px, -50px) scale(0.9); }
+        }
+
+        /* Interactive Rainbow Cursor Blob */
+        #cursor-blob {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
+            filter: blur(120px);
+            opacity: 0.4;
+            z-index: -2;
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        /* Liquid Card / Glassmorphism */
+        .liquid-card {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-radius: 1.5rem; /* rounded-3xl equivalent if defined */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05), 0 0 15px rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.8); /* Inner Glow approximation */
+            padding: 32px;
+        }
+
+        /* Liquid Button */
+        .liquid-btn {
+            background-color: #000000;
+            color: #ffffff;
+            border-radius: 9999px;
+            padding: 16px 32px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .liquid-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body class="relative min-h-screen flex flex-col justify-between">
+<!-- Interactive Cursor Blob -->
+<div id="cursor-blob"></div>
+<!-- Ambient Background Shapes -->
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<!-- Top Navigation (Injected Component Structure) -->
+<nav class="fixed top-5 left-1/2 -translate-x-1/2 w-[calc(100%-40px)] max-w-7xl rounded-full bg-white/80 dark:bg-black/80 backdrop-blur-xl border-[1.5px] border-black dark:border-white/20 shadow-[0_20px_40px_rgba(0,0,0,0.05)] z-50 flex justify-between items-center px-8 py-3">
+<div class="font-headline-lg text-headline-lg tracking-tighter text-primary dark:text-on-primary-fixed md:hidden font-headline-lg-mobile text-headline-lg-mobile">
+            Campus Nutrition Analyzer
+        </div>
+<div class="hidden md:flex flex-1 items-center justify-between">
+<div class="font-headline-lg text-headline-lg tracking-tighter text-primary dark:text-on-primary-fixed">
+                Campus Nutrition Analyzer
+            </div>
+<div class="flex items-center gap-6 font-body-md text-body-md">
+<a class="text-primary dark:text-on-primary-fixed font-bold hover:scale-105 transition-transform duration-300" href="#">หน้าแรก</a>
+<a class="text-secondary dark:text-on-secondary-container hover:scale-105 transition-transform duration-300" href="#">ร้านอาหาร</a>
+<a class="text-secondary dark:text-on-secondary-container hover:scale-105 transition-transform duration-300" href="#">โภชนาการของฉัน</a>
+</div>
+<button class="font-body-md text-body-md text-primary dark:text-inverse-primary hover:scale-105 transition-transform duration-300 active:scale-95 transition-all">
+                เข้าสู่ระบบ / สมัครสมาชิก
+            </button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex items-center justify-center pt-32 pb-24 px-container-padding max-w-7xl mx-auto w-full z-10 relative">
+<!-- Hero Section -->
+<section class="liquid-card w-full max-w-4xl text-center flex flex-col items-center justify-center gap-8 py-16 md:py-24">
+<div class="flex flex-col gap-4">
+<h1 class="font-display-lg text-display-lg text-primary md:text-[64px] md:leading-tight">
+                    วิเคราะห์โภชนาการอาหาร<br/>ในมหาวิทยาลัย
+                </h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto text-lg md:text-xl">
+                    ค้นหาข้อมูลโภชนาการจากร้านอาหารในมหาวิทยาลัยของคุณได้อย่างง่ายดาย วางแผนมื้ออาหารเพื่อสุขภาพที่ดีกว่า ท่ามกลางชีวิตในรั้วมหาวิทยาลัย
+                </p>
+</div>
+<a class="liquid-btn font-body-md text-body-md mt-4" href="1.html">
+<span>เริ่มดูโภชนาการอาหาร</span>
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</a>
+<!-- Decorative Visual Element (Placeholder for complex visualization) -->
+<div class="w-full max-w-lg mt-8 rounded-2xl overflow-hidden shadow-lg border border-outline-variant/30">
+<img alt="Nutritional Data Concept" class="object-cover w-full h-64 md:h-80" data-alt="A clean, minimalist 3D rendering of a healthy meal plate breaking apart into floating nutritional data points and charts. The setting is a bright, modern studio space with soft, diffuse white lighting highlighting the sleek, monochrome aesthetic of the data visualizations. The mood is analytical, advanced, and healthy, utilizing deep blacks, stark whites, and highly polished translucent surfaces." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBodggHz9Zu1UgvZG0Mw6wuAsxEDXqqsgjq_LerXqw0Ytw_jpgJA6ISZ28cc9LuF_yVqN0fJWX651NcIypWsgJi647EIdB1Hx2R7w761wePVEKnfP3QPQYv60GgbkSTJbD78XfU9evim8EFQLiSDNxeW3Iygt9O3ZolQNAME4B64Cp-KQIAXAqBijKQnX6Mq6esejxiunQ9ItUbtiTEW5wekkdN7a-QYlYMvOMYeK6Yb_xSBXci12w4"/>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface dark:bg-surface-container-highest w-full py-12 border-t border-outline-variant z-10 relative">
+<div class="flex flex-col md:flex-row justify-between items-center px-container-padding max-w-7xl mx-auto gap-8">
+<div class="font-headline-lg-mobile text-headline-lg-mobile text-primary">
+                Campus Nutrition Analyzer
+            </div>
+<div class="flex flex-wrap justify-center gap-6 font-label-caps text-label-caps text-secondary dark:text-on-secondary-container">
+<a class="hover:text-primary dark:hover:text-white transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary dark:hover:text-white transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-primary dark:hover:text-white transition-colors" href="#">Contact Support</a>
+</div>
+<div class="font-label-caps text-label-caps text-secondary dark:text-on-secondary-container text-center md:text-right">
+                © 2024 Campus Nutrition Analyzer. All rights reserved.
+            </div>
+</div>
+</footer>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const cursorBlob = document.getElementById('cursor-blob');
+        if (!cursorBlob) return;
+        
+        // Initialize position at center of screen
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let blobX = mouseX;
+        let blobY = mouseY;
+        
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+        
+        function animate() {
+            // Lerp formulation
+            blobX += (mouseX - blobX) * 0.05;
+            blobY += (mouseY - blobY) * 0.05;
+            
+            // Offset by half the width/height (300px) to center the blob on the cursor
+            cursorBlob.style.transform = `translate(${blobX - 300}px, ${blobY - 300}px)`;
+            
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+    });
+</script>
+</body></html>

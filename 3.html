@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Menu Detail &amp; Nutrition Analysis</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "on-tertiary-fixed": "#1a1b22",
+                "inverse-surface": "#2f3132",
+                "tertiary-container": "#1a1b22",
+                "surface-container-highest": "#e2e2e3",
+                "on-tertiary-container": "#83838c",
+                "surface-container-low": "#f3f3f4",
+                "primary": "#000000",
+                "error-container": "#ffdad6",
+                "outline-variant": "#cfc4c5",
+                "on-primary": "#ffffff",
+                "primary-container": "#1b1b1b",
+                "surface-bright": "#f9f9fa",
+                "secondary-container": "#dfe0e0",
+                "on-primary-container": "#848484",
+                "surface-dim": "#dadadb",
+                "primary-fixed": "#e2e2e2",
+                "on-primary-fixed-variant": "#474747",
+                "error": "#ba1a1a",
+                "tertiary-fixed": "#e3e1ec",
+                "surface-container": "#eeeeef",
+                "on-secondary": "#ffffff",
+                "tertiary": "#000000",
+                "inverse-on-surface": "#f0f1f2",
+                "surface": "#f9f9fa",
+                "surface-container-high": "#e8e8e9",
+                "on-background": "#1a1c1d",
+                "tertiary-fixed-dim": "#c6c5cf",
+                "on-primary-fixed": "#1b1b1b",
+                "outline": "#7e7576",
+                "primary-fixed-dim": "#c6c6c6",
+                "inverse-primary": "#c6c6c6",
+                "on-secondary-fixed": "#1a1c1c",
+                "on-error-container": "#93000a",
+                "on-error": "#ffffff",
+                "surface-variant": "#e2e2e3",
+                "secondary-fixed-dim": "#c6c6c7",
+                "secondary": "#5d5f5f",
+                "on-surface": "#1a1c1d",
+                "on-tertiary-fixed-variant": "#46464e",
+                "surface-container-lowest": "#ffffff",
+                "on-surface-variant": "#4c4546",
+                "surface-tint": "#5e5e5e",
+                "on-tertiary": "#ffffff",
+                "on-secondary-fixed-variant": "#454747",
+                "background": "#f9f9fa",
+                "secondary-fixed": "#e2e2e2",
+                "on-secondary-container": "#616363"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "card-gap": "20px",
+                "base": "8px",
+                "container-padding": "24px",
+                "section-gap": "48px",
+                "gutter": "16px"
+        },
+        "fontFamily": {
+                "body-md": [
+                        "Kanit"
+                ],
+                "label-caps": [
+                        "Kanit"
+                ],
+                "display-lg": [
+                        "Kanit"
+                ],
+                "headline-lg": [
+                        "Kanit"
+                ],
+                "stats-num": [
+                        "Kanit"
+                ],
+                "headline-lg-mobile": [
+                        "Kanit"
+                ]
+        },
+        "fontSize": {
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "1.6",
+                                "letterSpacing": "0em",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-caps": [
+                        "12px",
+                        {
+                                "lineHeight": "1",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "display-lg": [
+                        "48px",
+                        {
+                                "lineHeight": "1.1",
+                                "letterSpacing": "-0.04em",
+                                "fontWeight": "800"
+                        }
+                ],
+                "headline-lg": [
+                        "32px",
+                        {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "stats-num": [
+                        "24px",
+                        {
+                                "lineHeight": "1",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-lg-mobile": [
+                        "24px",
+                        {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+        body {
+            background-color: #F4F4F5; /* Neutral gray base */
+        }
+        /* Background Blobs */
+        .bg-blob {
+            position: absolute;
+            background-color: #E0E0E0;
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: -1;
+        }
+        .blob-1 {
+            width: 400px;
+            height: 400px;
+            top: 10%;
+            left: -10%;
+        }
+        .blob-2 {
+            width: 500px;
+            height: 500px;
+            bottom: 20%;
+            right: -5%;
+        }
+        /* Liquid Shadow */
+        .liquid-shadow {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-on-surface min-h-screen relative overflow-x-hidden">
+<!-- Background Ambient Shapes -->
+<div class="bg-blob blob-1"></div>
+<div class="bg-blob blob-2"></div>
+<!-- Top Navigation Bar -->
+<nav class="fixed top-5 left-1/2 -translate-x-1/2 w-[calc(100%-40px)] max-w-7xl rounded-full bg-white/80 dark:bg-black/80 backdrop-blur-xl border-[1.5px] border-black dark:border-white/20 shadow-[0_20px_40px_rgba(0,0,0,0.05)] flex justify-between items-center px-8 py-3 z-50 transition-all">
+<div class="flex items-center gap-4">
+<a id="back-link" class="w-10 h-10 flex items-center justify-center rounded-full bg-white border-[1.5px] border-black hover:scale-105 transition-transform duration-300 shadow-[0_10px_20px_rgba(0,0,0,0.05)]">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</a>
+<div class="font-headline-lg text-headline-lg tracking-tighter text-primary dark:text-on-primary-fixed">Campus Nutrition Analyzer</div>
+<div class="flex items-center gap-6">
+<a class="text-primary dark:text-inverse-primary font-body-md text-body-md font-semibold hover:scale-105 transition-transform duration-300" href="4.html">แดชบอร์ด</a>
+<a class="text-primary dark:text-inverse-primary font-body-md text-body-md font-semibold hover:scale-105 transition-transform duration-300" href="add-food.html">เพิ่มอาหาร</a>
+<a class="text-primary dark:text-inverse-primary font-body-md text-body-md font-semibold hover:scale-105 transition-transform duration-300" href="history.html">ประวัติ</a>
+<a class="text-primary dark:text-inverse-primary font-body-md text-body-md font-semibold hover:scale-105 transition-transform duration-300" href="profile.html">โปรไฟล์</a>
+<button class="font-body-md text-body-md text-secondary dark:text-on-secondary-container hover:scale-105 transition-transform duration-300" id="login-btn">เข้าสู่ระบบ / สมัครสมาชิก</button>
+</div>
+</nav>
+<!-- Main Content Container -->
+<main class="pt-[120px] pb-[80px] px-container-padding max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-card-gap">
+<!-- Dish Overview (Left Column on Desktop) -->
+<section class="md:col-span-5 flex flex-col gap-base">
+<div class="rounded-3xl overflow-hidden bg-white/10 backdrop-blur-[40px] border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.05),0_0_20px_rgba(255,255,255,0.5)] p-base">
+<img id="dish-image" class="w-full h-auto aspect-square object-cover rounded-2xl" data-alt="A high-quality, top-down photograph of Thai Basil Chicken with a fried egg (Pad Kra Pao Gai Kai Dao) on a minimalist white ceramic plate. The lighting is bright and soft, typical of a modern light-mode UI, casting extremely diffused, low-opacity ambient shadows. The background is a clean, neutral surface. The food looks fresh and appetizing, with vibrant green basil leaves, glossy chicken, and a perfectly cooked sunny-side-up egg." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA21-1rhJ-s_t71kgkRlNEYBN9bhkciDrBqqGUCH2xZsMPUl4yCo2095J4RXDjqiuTak19ztGcNyU-fH3KiVNM19crNsm1iXXpLHYYHEXrM_HHbspltKb69I3mWWJw-Md_TB9rJXbFWwWSv_NIX8rfrxRC4EeGXXSs0C3FVWs8Jy44oEi4w1ykTX460fibgYeu56QpOsSaVvLU5r0RdLB-YiXa94zcF261v-TWepE2Y5LbCaYSNJq5E"/>
+</div>
+<div class="bg-white/10 backdrop-blur-[40px] border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.05),0_0_20px_rgba(255,255,255,0.5)] rounded-3xl p-[32px] flex flex-col gap-base">
+<h1 id="dish-name" class="font-headline-lg text-headline-lg text-primary">ข้าวกะเพราไก่ไข่ดาว</h1>
+<p id="dish-price" class="font-stats-num text-stats-num text-secondary">50 THB</p>
+<p id="dish-description" class="font-body-md text-body-md text-on-surface-variant mt-2">A classic Thai street food staple featuring stir-fried minced chicken with holy basil, chili, and garlic, served over steamed jasmine rice and topped with a crispy fried egg. A flavorful and hearty meal.</p>
+<div class="flex flex-col gap-4 mt-4">
+<div class="flex flex-col">
+<label class="font-label-caps text-label-caps text-secondary mb-2" for="meal-type">เลือกมื้ออาหาร</label>
+<select class="bg-white/20 backdrop-blur-md border border-white/30 rounded-full py-2 px-4 text-primary font-body-md text-body-md" id="meal-type">
+<option value="breakfast">มื้อเช้า</option>
+<option value="lunch" selected>มื้อเที่ยง</option>
+<option value="dinner">มื้อเย็น</option>
+<option value="snack">ของว่าง</option>
+</select>
+</div>
+<button class="w-full bg-primary text-on-primary rounded-full py-3 font-body-md text-body-md hover:scale-105 transition-transform duration-300 shadow-[0_10px_20px rgba(0,0,0,0.1)]" id="add-to-log-btn">
+เพิ่มลงบันทึกแคลอรี่
+</button>
+</div>
+</div>
+</section>
+<!-- Nutrition Dashboard (Right Column on Desktop) -->
+<section class="md:col-span-7">
+<div class="bg-white/10 backdrop-blur-[40px] border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.05),0_0_20px_rgba(255,255,255,0.5)] rounded-3xl p-[32px] h-full flex flex-col gap-[40px]">
+<!-- Highlights: Total Calories -->
+<div class="flex flex-col items-center justify-center p-8 bg-white/10 backdrop-blur-[40px] border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.05),0_0_20px_rgba(255,255,255,0.5)] rounded-3xl relative overflow-hidden group hover:scale-[1.02] transition-transform duration-300">
+<span class="material-symbols-outlined text-4xl mb-4 text-primary" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<h2 id="dish-kcal" class="font-display-lg text-display-lg text-primary">520 <span class="font-headline-lg text-headline-lg">kcal</span></h2>
+<p class="font-label-caps text-label-caps text-secondary mt-2 uppercase">Total Calories</p>
+</div>
+<!-- Macronutrient Progress Bars -->
+<div class="flex flex-col gap-6">
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile text-primary border-b border-outline-variant pb-2">Macronutrients</h3>
+<!-- Carbs -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<span class="font-body-md text-body-md text-on-surface">Carbohydrates (คาร์โบไฮเดรต)</span>
+<span id="dish-carbs" class="font-stats-num text-stats-num text-primary">65g</span>
+</div>
+<div class="w-full bg-white/20 backdrop-blur-md border border-white/30 shadow-inner h-[8px] rounded-full overflow-hidden">
+<div id="bar-carbs" class="bg-primary h-full rounded-full relative" style="width: 60%;">
+<div class="absolute right-0 top-0 bottom-0 w-4 bg-white/30 blur-[2px]"></div>
+</div>
+</div>
+</div>
+<!-- Protein -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<span class="font-body-md text-body-md text-on-surface">Protein (โปรตีน)</span>
+<span id="dish-protein" class="font-stats-num text-stats-num text-primary">28g</span>
+</div>
+<div class="w-full bg-white/20 backdrop-blur-md border border-white/30 shadow-inner h-[8px] rounded-full overflow-hidden">
+<div id="bar-protein" class="bg-primary h-full rounded-full relative" style="width: 40%;">
+<div class="absolute right-0 top-0 bottom-0 w-4 bg-white/30 blur-[2px]"></div>
+</div>
+</div>
+</div>
+<!-- Fat -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<span class="font-body-md text-body-md text-on-surface">Fat (ไขมัน)</span>
+<span id="dish-fat" class="font-stats-num text-stats-num text-primary">14g</span>
+</div>
+<div class="w-full bg-white/20 backdrop-blur-md border border-white/30 shadow-inner h-[8px] rounded-full overflow-hidden">
+<div id="bar-fat" class="bg-primary h-full rounded-full relative" style="width: 25%;">
+<div class="absolute right-0 top-0 bottom-0 w-4 bg-white/30 blur-[2px]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Additional Stats -->
+<div class="grid grid-cols-3 gap-4 pt-4 border-t border-outline-variant">
+<div class="flex flex-col items-center justify-center">
+<span class="font-stats-num text-stats-num text-primary">980<span class="text-sm">mg</span></span>
+<span class="font-label-caps text-label-caps text-secondary mt-1">Sodium</span>
+</div>
+<div class="flex flex-col items-center justify-center border-l border-r border-outline-variant">
+<span class="font-stats-num text-stats-num text-primary">3<span class="text-sm">g</span></span>
+<span class="font-label-caps text-label-caps text-secondary mt-1">Fiber</span>
+</div>
+<div class="flex flex-col items-center justify-center">
+<span class="font-stats-num text-stats-num text-primary">5<span class="text-sm">g</span></span>
+<span class="font-label-caps text-label-caps text-secondary mt-1">Sugar</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface dark:bg-surface-container-highest w-full py-12 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center px-container-padding max-w-7xl mx-auto gap-8 mt-20">
+<div class="font-headline-lg-mobile text-headline-lg-mobile text-primary">
+            Campus Nutrition Analyzer
+        </div>
+<div class="flex gap-6">
+<a class="font-label-caps text-label-caps text-secondary dark:text-on-secondary-container hover:text-primary dark:hover:text-white transition-colors uppercase" href="#">Privacy Policy</a>
+<a class="font-label-caps text-label-caps text-secondary dark:text-on-secondary-container hover:text-primary dark:hover:text-white transition-colors uppercase" href="#">Terms of Service</a>
+<a class="font-label-caps text-label-caps text-secondary dark:text-on-secondary-container hover:text-primary dark:hover:text-white transition-colors uppercase" href="#">Contact Support</a>
+</div>
+<div class="font-label-caps text-label-caps text-secondary dark:text-on-secondary-container">
+            © 2024 Campus Nutrition Analyzer. All rights reserved.
+        </div>
+</footer>
+<script>
+  const dishData = {
+    'krapow-gai-khai-dao': {
+      name: 'ข้าวกะเพราไก่ไข่ดาว',
+      price: '50 THB',
+      description: 'A classic Thai street food staple featuring stir-fried minced chicken with holy basil, chili, and garlic, served over steamed jasmine rice and topped with a crispy fried egg. A flavorful and hearty meal.',
+      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA21-1rhJ-s_t71kgkRlNEYBN9bhkciDrBqqGUCH2xZsMPUl4yCo2095J4RXDjqiuTak19ztGcNyU-fH3KiVNM19crNsm1iXXpLHYYHEXrM_HHbspltKb69I3mWWJw-Md_TB9rJXbFWwWSv_NIX8rfrxRC4EeGXXSs0C3FVWs8Jy44oEi4w1ykTX460fibgYeu56QpOsSaVvLU5r0RdLB-YiXa94zcF261v-TWepE2Y5LbCaYSNJq5E',
+      kcal: 520,
+      carbs: 65,
+      protein: 28,
+      fat: 14,
+      sodium: '980mg',
+      fiber: '3g',
+      sugar: '5g'
+    },
+    'omelet-pork': {
+      name: 'ข้าวไข่เจียวหมูสับ',
+      price: '40 THB',
+      description: 'A comforting Thai-style omelet rice with minced pork, savory seasoning, and fluffy eggs. Rich in flavor, easy to eat, and ideal for a quick campus meal.',
+      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDvoqHr0at4Ka-PyJlsBTO2FnyzRfVxyS6uBfV3V7aDh9GKfdk62h5Wkmu216KXcOqXoc8JNRIGsrBvG44z6vglGtdsnpm2rZ_KgtS2xnaQK2CelxefwkzRkuBlByXjlbWTnzo5nd7f5HVeioQ5kyBOt6FtNH3UhKzZ9tHdWjAeACrXvw0PY-8FFOmcCHvP2zphV5ehUYpQJL9hUnPx9IJVFycvplAFu5UPE0NDj6SJkdqfVHs9qxZD',
+      kcal: 380,
+      carbs: 48,
+      protein: 22,
+      fat: 18,
+      sodium: '760mg',
+      fiber: '2g',
+      sugar: '4g'
+    },
+    'tom-yum-goong': {
+      name: 'ต้มยำกุ้งน้ำข้น',
+      price: '80 THB',
+      description: 'A vibrant and aromatic Thai shrimp soup with lemongrass, lime, chili, mushrooms, and herbs. Light yet deeply savory with a refreshing finish.',
+      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCwKL95POh0ZhmTpNqFoj7T64hfp2KaptfTMZ4KyRmCrHhaQymnrwMM4I6Enyu3eu_aTHOzvuCU6b7yiJrpeq0AWmnTtiJX46A681pxtm4bRHHfs5bLPoXPP5sRrGYrJYe5rYwjNIBAH3vhrPf3q3upNiRX-dTWueAwIZH5V4G20NmCZkWsi7IQYMtrZ7imdUto80gKWfYOXDulap4Ou_r--DvgeJBrvQfZodcFKZaKHNXFygjiiytf',
+      kcal: 250,
+      carbs: 18,
+      protein: 26,
+      fat: 9,
+      sodium: '820mg',
+      fiber: '3g',
+      sugar: '6g'
+    },
+    'khao-pad-moo': {
+      name: 'ข้าวผัดหมู',
+      price: '45 THB',
+      description: 'Classic Thai fried rice with minced pork, vegetables, and seasonings. A satisfying and flavorful campus meal option.',
+      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBxdvZvGiRqlJUT1BhxVnA8w_mQyXQlPECQHCNllBKe5b33mQp6QMUJsbarDES5gNYo7XedPER29AbgvCht1QuGvqD0Q6m_MLOZWTcusf6Yb-_lSOZG6-80-GygvQAD1fkHRG3dD-38LwOTjOBjhZJ648T9gKxLBii8hwaRI6Btf9G_rKB_UpdIiDn4KsauLsz1HL1l-B3WC-uGBzLSYxFJ6KUD1bb9u_Ex0I5Uqwy4ay33i2ljTegb',
+      kcal: 520,
+      carbs: 68,
+      protein: 24,
+      fat: 16,
+      sodium: '1100mg',
+      fiber: '2g',
+      sugar: '3g'
+    },
+    // โรงอาหารกลาง (central-cafe)
+    'pad-thai': {
+      name: 'ผัดไทย',
+      price: '50 THB',
+      description: 'Classic Thai stir-fried noodles with eggs, tofu, bean sprouts, and peanuts. Sweet and tangy flavor.',
+      image: 'https://via.placeholder.com/400x300?text=Pad+Thai',
+      kcal: 480,
+      carbs: 65,
+      protein: 18,
+      fat: 15,
+      sodium: '900mg',
+      fiber: '4g',
+      sugar: '8g'
+    },
+    'khao-khaeng-moo': {
+      name: 'ข้าวแกงหมู',
+      price: '45 THB',
+      description: 'Thai curry pork with rice. Rich and flavorful curry sauce with tender pork.',
+      image: 'https://via.placeholder.com/400x300?text=Curry+Pork',
+      kcal: 420,
+      carbs: 55,
+      protein: 20,
+      fat: 14,
+      sodium: '850mg',
+      fiber: '3g',
+      sugar: '6g'
+    },
+    'sushi-set': {
+      name: 'เซ็ตซูชิ',
+      price: '120 THB',
+      description: 'Japanese sushi set with various nigiri and maki rolls. Fresh and healthy.',
+      image: 'https://via.placeholder.com/400x300?text=Sushi+Set',
+      kcal: 380,
+      carbs: 45,
+      protein: 28,
+      fat: 10,
+      sodium: '750mg',
+      fiber: '2g',
+      sugar: '5g'
+    },
+    // ตึกวิทยาศาสตร์ (science-cafe)
+    'caesar-salad': {
+      name: 'สลัดซีซาร์',
+      price: '60 THB',
+      description: 'Fresh romaine lettuce with Caesar dressing, croutons, and parmesan cheese.',
+      image: 'https://via.placeholder.com/400x300?text=Caesar+Salad',
+      kcal: 320,
+      carbs: 15,
+      protein: 12,
+      fat: 22,
+      sodium: '650mg',
+      fiber: '4g',
+      sugar: '3g'
+    },
+    'fruit-smoothie': {
+      name: 'สมูทตี้ผลไม้',
+      price: '45 THB',
+      description: 'Fresh fruit smoothie with mixed berries and banana. No added sugar.',
+      image: 'https://via.placeholder.com/400x300?text=Fruit+Smoothie',
+      kcal: 180,
+      carbs: 42,
+      protein: 3,
+      fat: 1,
+      sodium: '50mg',
+      fiber: '6g',
+      sugar: '35g'
+    },
+    'grilled-chicken-salad': {
+      name: 'สลัดไก่ย่าง',
+      price: '70 THB',
+      description: 'Grilled chicken breast with mixed greens, tomatoes, and light vinaigrette.',
+      image: 'https://via.placeholder.com/400x300?text=Grilled+Chicken+Salad',
+      kcal: 280,
+      carbs: 12,
+      protein: 35,
+      fat: 12,
+      sodium: '550mg',
+      fiber: '5g',
+      sugar: '8g'
+    },
+    // อาคารเรียนรวม (academic-cafe)
+    'khao-klook-kapi': {
+      name: 'ข้าวคลุกกะปิ',
+      price: '40 THB',
+      description: 'Thai shrimp paste rice with fried egg, vegetables, and crispy pork.',
+      image: 'https://via.placeholder.com/400x300?text=Khao+Klook+Kapi',
+      kcal: 450,
+      carbs: 58,
+      protein: 16,
+      fat: 18,
+      sodium: '950mg',
+      fiber: '3g',
+      sugar: '5g'
+    },
+    'spaghetti-carbonara': {
+      name: 'สปาเก็ตตีคาร์บอนารา',
+      price: '80 THB',
+      description: 'Italian pasta with creamy carbonara sauce, bacon, and parmesan.',
+      image: 'https://via.placeholder.com/400x300?text=Spaghetti+Carbonara',
+      kcal: 550,
+      carbs: 62,
+      protein: 22,
+      fat: 24,
+      sodium: '800mg',
+      fiber: '2g',
+      sugar: '4g'
+    },
+    'fried-chicken-rice': {
+      name: 'ข้าวไก่ทอด',
+      price: '50 THB',
+      description: 'Crispy fried chicken with rice and sweet chili sauce.',
+      image: 'https://via.placeholder.com/400x300?text=Fried+Chicken+Rice',
+      kcal: 520,
+      carbs: 58,
+      protein: 28,
+      fat: 20,
+      sodium: '900mg',
+      fiber: '2g',
+      sugar: '6g'
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const restaurantId = params.get('restaurant') || 'pra-daeng';
+    const dishId = params.get('dish') || 'krapow-gai-khai-dao';
+    const dish = dishData[dishId] || dishData['krapow-gai-khai-dao'];
+
+    const restaurantName = JSON.parse(localStorage.getItem('selectedRestaurant') || '{}').name || 'ร้านกะเพราป้าแดง';
+    const backLink = document.getElementById('back-link');
+    if (backLink) {
+      backLink.href = `2.html?restaurant=${restaurantId}`;
+    }
+
+    const title = document.getElementById('dish-name');
+    const price = document.getElementById('dish-price');
+    const description = document.getElementById('dish-description');
+    const image = document.getElementById('dish-image');
+    const kcal = document.getElementById('dish-kcal');
+    const carbs = document.getElementById('dish-carbs');
+    const protein = document.getElementById('dish-protein');
+    const fat = document.getElementById('dish-fat');
+
+    if (title) title.textContent = dish.name;
+    if (price) price.textContent = dish.price;
+    if (description) description.textContent = dish.description;
+    if (image) {
+      image.src = dish.image;
+      image.alt = dish.name;
+    }
+    if (kcal) kcal.innerHTML = `${dish.kcal} <span class="font-headline-lg text-headline-lg">kcal</span>`;
+    if (carbs) carbs.textContent = `${dish.carbs}g`;
+    if (protein) protein.textContent = `${dish.protein}g`;
+    if (fat) fat.textContent = `${dish.fat}g`;
+
+    const carbsBar = document.getElementById('bar-carbs');
+    const proteinBar = document.getElementById('bar-protein');
+    const fatBar = document.getElementById('bar-fat');
+    if (carbsBar) carbsBar.style.width = `${Math.min(100, (dish.carbs / 120) * 100)}%`;
+    if (proteinBar) proteinBar.style.width = `${Math.min(100, (dish.protein / 80) * 100)}%`;
+    if (fatBar) fatBar.style.width = `${Math.min(100, (dish.fat / 40) * 100)}%`;
+
+    const label = document.querySelector('header .liquid-card span');
+    if (label) label.textContent = restaurantName;
+
+    // Handle login button
+    const loginBtn = document.getElementById('login-btn');
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+
+    if (currentUser.email) {
+      loginBtn.textContent = 'ออกจากระบบ';
+      loginBtn.addEventListener('click', () => {
+        localStorage.removeItem('currentUser');
+        window.location.reload();
+      });
+    } else {
+      loginBtn.addEventListener('click', () => {
+        window.location.href = 'login.html';
+      });
+    }
+
+    // Handle add to log button
+    const addToLogBtn = document.getElementById('add-to-log-btn');
+    if (addToLogBtn) {
+      addToLogBtn.addEventListener('click', () => {
+        const mealType = document.getElementById('meal-type').value;
+        const dishName = document.getElementById('dish-name').textContent;
+        const dishCalories = dish.kcal;
+
+        // Get today's date
+        const today = new Date().toISOString().split('T')[0];
+        const dailyLogs = JSON.parse(localStorage.getItem('dailyLogs') || '{}');
+
+        // Initialize today's log if not exists
+        if (!dailyLogs[today]) {
+          dailyLogs[today] = { meals: [], totalCalories: 0 };
+        }
+
+        // Add meal to today's log
+        const newMeal = {
+          name: dishName,
+          calories: dishCalories,
+          type: mealType,
+          timestamp: new Date().toISOString()
+        };
+
+        dailyLogs[today].meals.push(newMeal);
+        dailyLogs[today].totalCalories = dailyLogs[today].meals.reduce((sum, meal) => sum + meal.calories, 0);
+
+        // Save to localStorage
+        localStorage.setItem('dailyLogs', JSON.stringify(dailyLogs));
+
+        // Show success message
+        addToLogBtn.textContent = 'เพิ่มเรียบร้อย!';
+        addToLogBtn.classList.add('bg-green-600');
+        setTimeout(() => {
+          addToLogBtn.textContent = 'เพิ่มลงบันทึกแคลอรี่';
+          addToLogBtn.classList.remove('bg-green-600');
+        }, 2000);
+      });
+    }
+  });
+</script>
+</body></html>

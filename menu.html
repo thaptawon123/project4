@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+
+<html lang="th"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Campus Nutrition Analyzer - Interactive Meal Customizer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#ffffff",
+                        "tertiary-container": "#1a1b22",
+                        "inverse-on-surface": "#f0f1f2",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#1b1b1b",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-secondary-container": "#616363",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#46464e",
+                        "surface-tint": "#5e5e5e",
+                        "on-primary-fixed-variant": "#474747",
+                        "inverse-surface": "#2f3132",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "outline-variant": "#cfc4c5",
+                        "on-error": "#ffffff",
+                        "outline": "#7e7576",
+                        "on-secondary-fixed-variant": "#454747",
+                        "on-surface-variant": "#4c4546",
+                        "surface-variant": "#e2e2e3",
+                        "surface": "#f9f9fa",
+                        "secondary-container": "#dfe0e0",
+                        "surface-container": "#eeeeef",
+                        "surface-bright": "#f9f9fa",
+                        "secondary": "#5d5f5f",
+                        "surface-container-low": "#f3f3f4",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "error-container": "#ffdad6",
+                        "surface-container-highest": "#e2e2e3",
+                        "surface-container-high": "#e8e8e9",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#c6c6c6",
+                        "on-tertiary-container": "#83838c",
+                        "tertiary-fixed": "#e3e1ec",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#1a1b22",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#c6c5cf",
+                        "on-background": "#1a1c1d",
+                        "on-primary-fixed": "#1b1b1b",
+                        "on-surface": "#1a1c1d",
+                        "surface-dim": "#dadadb",
+                        "background": "#f9f9fa",
+                        "primary": "#000000",
+                        "on-primary-container": "#848484",
+                        "primary-fixed": "#e2e2e2",
+                        "tertiary": "#000000"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "section-gap": "48px",
+                        "base": "8px",
+                        "container-padding": "24px",
+                        "card-gap": "20px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Kanit"],
+                        "body-md": ["Kanit"],
+                        "label-caps": ["Kanit"],
+                        "display-lg": ["Kanit"],
+                        "stats-num": ["Kanit"],
+                        "headline-lg": ["Kanit"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800" }],
+                        "stats-num": ["24px", { "lineHeight": "1", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #f9f9fa; /* background */
+            color: #1a1c1d; /* on-background */
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        /* Liquid Background Effect */
+        #liquid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            transition: transform 0.5s ease-out;
+        }
+
+        .blob-1 {
+            width: 600px;
+            height: 600px;
+            background: rgba(226, 226, 227, 0.8); /* surface-container-highest */
+            top: -100px;
+            left: -100px;
+        }
+
+        .blob-2 {
+            width: 800px;
+            height: 800px;
+            background: rgba(238, 238, 239, 0.7); /* surface-container */
+            bottom: -200px;
+            right: -200px;
+        }
+        
+        .mouse-blob {
+             width: 400px;
+            height: 400px;
+            background: rgba(207, 196, 197, 0.4); /* outline-variant */
+            border-radius: 50%;
+            filter: blur(60px);
+            position: absolute;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            transition: left 0.1s ease-out, top 0.1s ease-out;
+            z-index: -1;
+        }
+
+        /* Glassmorphism Classes */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(207, 196, 197, 0.5); /* outline-variant */
+            border-radius: 0.75rem; /* xl */
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        }
+        
+        .glass-inner {
+            background: rgba(243, 243, 244, 0.5); /* surface-container-low */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 226, 227, 0.5);
+            border-radius: 0.5rem; /* lg */
+        }
+
+        /* Checkbox Customization */
+        .modifier-checkbox {
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border: 1.5px solid #000000; /* primary */
+            border-radius: 0.25rem; /* DEFAULT */
+            background-color: transparent;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .modifier-checkbox:checked {
+            background-color: #000000;
+        }
+
+        .modifier-checkbox:checked::after {
+            content: 'check';
+            font-family: 'Material Symbols Outlined';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        /* Progress Bar Liquid Glow */
+        .progress-bar-indicator {
+            box-shadow: 2px 0 8px rgba(0,0,0,0.4);
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md text-on-background relative min-h-screen flex flex-col">
+<!-- Liquid Background -->
+<div id="liquid-bg">
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="mouse-blob" id="mouse-blob"></div>
+</div>
+<!-- TopNavBar -->
+<nav class="bg-white/80 dark:bg-black/80 backdrop-blur-xl font-body-md text-body-md fixed top-5 left-1/2 -translate-x-1/2 w-[calc(100%-40px)] max-w-7xl rounded-full border-[1.5px] border-black dark:border-white/20 shadow-[0_20px_40px_rgba(0,0,0,0.05)] flex justify-between items-center px-8 py-3 z-50 transition-transform duration-300">
+<div class="font-headline-lg text-headline-lg tracking-tighter text-primary dark:text-on-primary-fixed cursor-pointer">
+            Campus Nutrition Analyzer
+        </div>
+<div class="hidden"></div> <!-- search_bar: hidden -->
+<button class="text-on-secondary bg-primary px-6 py-2 rounded-full font-label-caps text-label-caps hover:scale-105 transition-transform duration-300">
+            เข้าสู่ระบบ / สมัครสมาชิก
+        </button>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-[120px] pb-section-gap px-container-padding max-w-7xl mx-auto w-full">
+<header class="mb-section-gap text-center md:text-left">
+<h1 class="font-display-lg text-display-lg text-primary mb-2 hidden md:block">Interactive Meal Customizer</h1>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-2 md:hidden">Interactive Meal Customizer</h1>
+<p class="text-secondary">ปรับแต่งมื้ออาหารของคุณและดูการเปลี่ยนแปลงของโภชนาการแบบเรียลไทม์</p>
+</header>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-card-gap">
+<!-- Left Column: Base Food Item -->
+<section class="glass-card p-[32px] flex flex-col h-full">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-6">Base Meal</h2>
+<div class="relative w-full aspect-square rounded-lg overflow-hidden mb-6 border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A pristine, overhead studio shot of a classic Thai dish, Khao Pad Kaphrao Gai (Chicken Holy Basil Stir-fry with rice). The dish is plated on a minimalist matte white ceramic bowl. The lighting is high-key, soft, and diffuse, creating a modern, clinical, light-mode aesthetic. The background is a clean, neutral off-white surface, allowing the vibrant colors of the basil and chicken to pop slightly against a mostly monochrome setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbUSFlyz_qwEGDChil1Pkh5kHWKvnBA4WHPpg4HHvTqSCxdztkL0bx69RJPNoW8bb8KGSZzWEwSG4Xj-zTnvt_PtSEphzYWhsE25QhlbycH20KXLYLICozlqXV2JO8C6W3Y0cwqoLYyQti0AqQQ8HIMDd3ScHM0nn6ZbCBfP0l4ckZgNY5vcb1Dz5zmTo1la_otMlcaBoOOR_BPIQF-ELok1u2rxkopXOM9V-UVf-gBm5tzV0c4S7f"/>
+</div>
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-4">ข้าวกะเพราไก่ (Standard)</h3>
+<p class="text-secondary mb-6 flex-grow">A popular Thai street food staple featuring minced chicken stir-fried with holy basil, chili, and soy sauce, served over jasmine rice.</p>
+<div class="glass-inner p-4">
+<p class="font-label-caps text-label-caps text-secondary mb-2 uppercase">Baseline Nutrition</p>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<p class="text-secondary text-sm">Calories</p>
+<p class="font-stats-num text-stats-num text-primary">520 <span class="text-sm font-body-md text-secondary">kcal</span></p>
+</div>
+<div>
+<p class="text-secondary text-sm">Carbs</p>
+<p class="font-stats-num text-stats-num text-primary">65 <span class="text-sm font-body-md text-secondary">g</span></p>
+</div>
+<div>
+<p class="text-secondary text-sm">Protein</p>
+<p class="font-stats-num text-stats-num text-primary">28 <span class="text-sm font-body-md text-secondary">g</span></p>
+</div>
+<div>
+<p class="text-secondary text-sm">Fat</p>
+<p class="font-stats-num text-stats-num text-primary">14 <span class="text-sm font-body-md text-secondary">g</span></p>
+</div>
+</div>
+</div>
+</section>
+<!-- Middle Column: Ingredient Modifiers -->
+<section class="glass-card p-[32px] flex flex-col h-full">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-6">Modifiers</h2>
+<div class="flex-grow space-y-6">
+<!-- Category 1 -->
+<div>
+<h4 class="font-label-caps text-label-caps text-secondary uppercase mb-4 border-b border-outline-variant pb-2">Add-ons</h4>
+<ul class="space-y-4">
+<li class="flex items-center justify-between">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="modifier-checkbox" data-carbs="0" data-fat="7" data-kcal="90" data-pro="6" type="checkbox"/>
+<span class="text-primary group-hover:text-tertiary-container transition-colors">ไข่ดาว (Fried Egg)</span>
+</label>
+<span class="font-label-caps text-label-caps text-on-surface-variant">+90 kcal</span>
+</li>
+<li class="flex items-center justify-between">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="modifier-checkbox" data-carbs="0" data-fat="4" data-kcal="120" data-pro="20" type="checkbox"/>
+<span class="text-primary group-hover:text-tertiary-container transition-colors">เพิ่มเนื้อสัตว์ (Extra Meat)</span>
+</label>
+<span class="font-label-caps text-label-caps text-on-surface-variant">+120 kcal</span>
+</li>
+</ul>
+</div>
+<!-- Category 2 -->
+<div>
+<h4 class="font-label-caps text-label-caps text-secondary uppercase mb-4 border-b border-outline-variant pb-2">Adjustments</h4>
+<ul class="space-y-4">
+<li class="flex items-center justify-between">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="modifier-checkbox" data-carbs="-22" data-fat="0" data-kcal="-100" data-pro="-2" type="checkbox"/>
+<span class="text-primary group-hover:text-tertiary-container transition-colors">ข้าวครึ่งเดียว (Half Rice)</span>
+</label>
+<span class="font-label-caps text-label-caps text-on-surface-variant">-100 kcal</span>
+</li>
+<li class="flex items-center justify-between">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="modifier-checkbox" data-carbs="0" data-fat="-5" data-kcal="-50" data-pro="0" type="checkbox"/>
+<span class="text-primary group-hover:text-tertiary-container transition-colors">ลดน้ำมัน (Less Oil)</span>
+</label>
+<span class="font-label-caps text-label-caps text-on-surface-variant">-50 kcal</span>
+</li>
+<li class="flex items-center justify-between">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="modifier-checkbox" data-carbs="4" data-fat="0" data-kcal="20" data-pro="0" type="checkbox"/>
+<span class="text-primary group-hover:text-tertiary-container transition-colors">เพิ่มน้ำซอส (Extra Sauce)</span>
+</label>
+<span class="font-label-caps text-label-caps text-on-surface-variant">+20 kcal</span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Right Column: Real-Time Summary -->
+<section class="glass-card p-[32px] flex flex-col h-full sticky top-32">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-6">Total Impact</h2>
+<div class="glass-inner p-6 mb-8 text-center flex-grow flex flex-col justify-center">
+<p class="font-label-caps text-label-caps text-secondary uppercase mb-2">Total Calories</p>
+<div class="flex items-end justify-center gap-1">
+<span class="font-display-lg text-display-lg text-primary" id="total-kcal">520</span>
+<span class="text-secondary pb-2">kcal</span>
+</div>
+</div>
+<div class="space-y-6">
+<!-- Carbs Progress -->
+<div>
+<div class="flex justify-between mb-2">
+<span class="font-label-caps text-label-caps text-secondary uppercase">Carbohydrates</span>
+<span class="font-stats-num text-stats-num text-primary text-[16px]"><span id="total-carbs">65</span>g</span>
+</div>
+<div class="w-full bg-secondary-fixed h-2 rounded-full overflow-hidden relative">
+<div class="bg-primary h-full progress-bar-indicator rounded-full transition-all duration-500 ease-out w-[50%]" id="bar-carbs"></div>
+</div>
+</div>
+<!-- Protein Progress -->
+<div>
+<div class="flex justify-between mb-2">
+<span class="font-label-caps text-label-caps text-secondary uppercase">Protein</span>
+<span class="font-stats-num text-stats-num text-primary text-[16px]"><span id="total-pro">28</span>g</span>
+</div>
+<div class="w-full bg-secondary-fixed h-2 rounded-full overflow-hidden relative">
+<div class="bg-primary h-full progress-bar-indicator rounded-full transition-all duration-500 ease-out w-[30%]" id="bar-pro"></div>
+</div>
+</div>
+<!-- Fat Progress -->
+<div>
+<div class="flex justify-between mb-2">
+<span class="font-label-caps text-label-caps text-secondary uppercase">Fat</span>
+<span class="font-stats-num text-stats-num text-primary text-[16px]"><span id="total-fat">14</span>g</span>
+</div>
+<div class="w-full bg-secondary-fixed h-2 rounded-full overflow-hidden relative">
+<div class="bg-primary h-full progress-bar-indicator rounded-full transition-all duration-500 ease-out w-[20%]" id="bar-fat"></div>
+</div>
+</div>
+</div>
+<button class="mt-8 w-full bg-primary text-on-primary rounded-full py-3 font-label-caps text-label-caps hover:scale-[1.02] transition-transform shadow-[0_10px_20px_rgba(0,0,0,0.1)]">
+                    Save Custom Meal
+                </button>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface dark:bg-surface-container-highest font-label-caps text-label-caps w-full py-12 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center px-container-padding max-w-7xl mx-auto gap-8 mt-auto z-10 relative">
+<div class="font-headline-lg-mobile text-headline-lg-mobile text-primary">
+            Campus Nutrition Analyzer
+        </div>
+<div class="flex gap-6 text-secondary dark:text-on-secondary-container">
+<a class="hover:text-primary dark:hover:text-white transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary dark:hover:text-white transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-primary dark:hover:text-white transition-colors" href="#">Contact Support</a>
+</div>
+<div class="text-secondary dark:text-on-secondary-container">
+            © 2024 Campus Nutrition Analyzer. All rights reserved.
+        </div>
+</footer>
+<script>
+        // Liquid Background Mouse Follower
+        document.addEventListener('mousemove', (e) => {
+            const blob = document.getElementById('mouse-blob');
+            // Slight delay/smoothness added via CSS transition
+            blob.style.left = e.clientX + 'px';
+            blob.style.top = e.clientY + 'px';
+        });
+
+        // Dynamic Nutrition Calculator Logic
+        const baseNutrition = {
+            kcal: 520,
+            carbs: 65,
+            pro: 28,
+            fat: 14
+        };
+
+        const checkboxes = document.querySelectorAll('.modifier-checkbox');
+        
+        const elTotalKcal = document.getElementById('total-kcal');
+        const elTotalCarbs = document.getElementById('total-carbs');
+        const elTotalPro = document.getElementById('total-pro');
+        const elTotalFat = document.getElementById('total-fat');
+        
+        const barCarbs = document.getElementById('bar-carbs');
+        const barPro = document.getElementById('bar-pro');
+        const barFat = document.getElementById('bar-fat');
+
+        // Max values for progress bar scaling (arbitrary for demonstration)
+        const maxCarbs = 120;
+        const maxPro = 80;
+        const maxFat = 40;
+
+        function updateTotals() {
+            let currentNutrition = { ...baseNutrition };
+
+            checkboxes.forEach(cb => {
+                if (cb.checked) {
+                    currentNutrition.kcal += parseInt(cb.dataset.kcal);
+                    currentNutrition.carbs += parseInt(cb.dataset.carbs);
+                    currentNutrition.pro += parseInt(cb.dataset.pro);
+                    currentNutrition.fat += parseInt(cb.dataset.fat);
+                }
+            });
+
+            // Prevent negative values just in case
+            currentNutrition.carbs = Math.max(0, currentNutrition.carbs);
+            currentNutrition.pro = Math.max(0, currentNutrition.pro);
+            currentNutrition.fat = Math.max(0, currentNutrition.fat);
+
+            // Animate Numbers
+            animateValue(elTotalKcal, parseInt(elTotalKcal.innerText), currentNutrition.kcal, 300);
+            elTotalCarbs.innerText = currentNutrition.carbs;
+            elTotalPro.innerText = currentNutrition.pro;
+            elTotalFat.innerText = currentNutrition.fat;
+
+            // Update Progress Bars
+            barCarbs.style.width = `${Math.min(100, (currentNutrition.carbs / maxCarbs) * 100)}%`;
+            barPro.style.width = `${Math.min(100, (currentNutrition.pro / maxPro) * 100)}%`;
+            barFat.style.width = `${Math.min(100, (currentNutrition.fat / maxFat) * 100)}%`;
+        }
+
+        // Simple number counter animation
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Attach listeners
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', updateTotals);
+        });
+
+        // Initial setup
+        updateTotals();
+    </script>
+</body></html>

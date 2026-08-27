@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html lang="th"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Menu Selection - Campus Nutrition Analyzer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-dim": "#dadadb",
+                    "inverse-on-surface": "#f0f1f2",
+                    "surface-container": "#eeeeef",
+                    "on-primary-fixed": "#1b1b1b",
+                    "on-secondary-fixed": "#1a1c1c",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-container": "#616363",
+                    "surface-bright": "#f9f9fa",
+                    "outline": "#7e7576",
+                    "tertiary-fixed-dim": "#c6c5cf",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#474747",
+                    "primary-fixed-dim": "#c6c6c6",
+                    "surface-tint": "#5e5e5e",
+                    "outline-variant": "#cfc4c5",
+                    "on-surface-variant": "#4c4546",
+                    "on-primary-container": "#848484",
+                    "primary-fixed": "#e2e2e2",
+                    "on-tertiary-fixed-variant": "#46464e",
+                    "on-tertiary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "secondary-fixed": "#e2e2e2",
+                    "on-tertiary-container": "#83838c",
+                    "surface-container-highest": "#e2e2e3",
+                    "surface-container-high": "#e8e8e9",
+                    "surface": "#f9f9fa",
+                    "on-primary": "#ffffff",
+                    "tertiary": "#000000",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed-variant": "#454747",
+                    "tertiary-container": "#1a1b22",
+                    "on-tertiary-fixed": "#1a1b22",
+                    "secondary-fixed-dim": "#c6c6c7",
+                    "primary-container": "#1b1b1b",
+                    "tertiary-fixed": "#e3e1ec",
+                    "error-container": "#ffdad6",
+                    "primary": "#000000",
+                    "inverse-surface": "#2f3132",
+                    "inverse-primary": "#c6c6c6",
+                    "on-background": "#1a1c1d",
+                    "on-error-container": "#93000a",
+                    "background": "#f9f9fa",
+                    "on-surface": "#1a1c1d",
+                    "surface-variant": "#e2e2e3",
+                    "secondary-container": "#dfe0e0",
+                    "surface-container-low": "#f3f3f4",
+                    "secondary": "#5d5f5f"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px",
+                    "3xl": "1.5rem"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "card-gap": "20px",
+                    "base": "8px",
+                    "container-padding": "24px"
+            },
+            "fontFamily": {
+                    "display-lg": [
+                            "Kanit"
+                    ],
+                    "headline-lg": [
+                            "Kanit"
+                    ],
+                    "stats-num": [
+                            "Kanit"
+                    ],
+                    "body-md": [
+                            "Kanit"
+                    ],
+                    "label-caps": [
+                            "Kanit"
+                    ],
+                    "headline-lg-mobile": [
+                            "Kanit"
+                    ]
+            },
+            "fontSize": {
+                    "display-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "letterSpacing": "-0.04em",
+                                    "fontWeight": "800"
+                            }
+                    ],
+                    "headline-lg": [
+                            "32px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "stats-num": [
+                            "24px",
+                            {
+                                    "lineHeight": "1",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "1.6",
+                                    "letterSpacing": "0em",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "label-caps": [
+                            "12px",
+                            {
+                                    "lineHeight": "1",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-lg-mobile": [
+                            "24px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #F4F4F5;
+            overflow-x: hidden;
+            font-family: 'Kanit', sans-serif;
+        }
+        
+        .liquid-shadow {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+        }
+        
+        .liquid-card {
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-radius: 1.5rem;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4), 0 20px 40px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        
+        .bg-blob {
+            position: absolute;
+            filter: blur(60px);
+            z-index: -1;
+            opacity: 0.5;
+            background-color: #E0E0E0;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md text-on-background relative min-h-screen pb-[200px]">
+<!-- Decorative Background Blobs -->
+<div class="bg-blob w-[500px] h-[500px] top-[-100px] left-[-100px]"></div>
+<div class="bg-blob w-[600px] h-[600px] bottom-[200px] right-[-200px]"></div>
+<div class="bg-blob w-[400px] h-[400px] top-[40%] left-[20%]"></div>
+<!-- TopNavBar (Nav suppressed due to transactional nature of sub-page, but shell remains) -->
+<nav class="fixed top-5 left-1/2 -translate-x-1/2 w-[calc(100%-40px)] max-w-7xl rounded-full bg-white/80 dark:bg-black/80 backdrop-blur-xl border-[1.5px] border-black dark:border-white/20 shadow-[0_20px_40px_rgba(0,0,0,0.05)] flex justify-between items-center px-8 py-3 z-50 transition-transform duration-300">
+<div class="font-headline-lg text-headline-lg tracking-tighter text-primary dark:text-on-primary-fixed md:font-headline-lg md:text-headline-lg font-headline-lg-mobile text-headline-lg-mobile">Campus Nutrition Analyzer</div>
+<div class="flex items-center gap-4">
+<a class="text-primary dark:text-inverse-primary font-body-md text-body-md font-semibold hover:scale-105 transition-transform duration-300" href="4.html">แดชบอร์ด</a>
+<a class="text-primary dark:text-inverse-primary font-body-md text-body-md font-semibold hover:scale-105 transition-transform duration-300" href="add-food.html">เพิ่มอาหาร</a>
+<a class="text-primary dark:text-inverse-primary font-body-md text-body-md font-semibold hover:scale-105 transition-transform duration-300" href="history.html">ประวัติ</a>
+<a class="text-primary dark:text-inverse-primary font-body-md text-body-md font-semibold hover:scale-105 transition-transform duration-300" href="profile.html">โปรไฟล์</a>
+<button class="bg-primary text-on-primary font-body-md text-body-md px-6 py-2 rounded-full hover:scale-105 transition-transform duration-300 shadow-[0_10px_20px_rgba(0,0,0,0.1)]" id="login-btn">เข้าสู่ระบบ / สมัครสมาชิก</button>
+</div>
+</nav>
+<main class="max-w-7xl mx-auto pt-[120px] px-container-padding md:px-0">
+<!-- Vendor Header -->
+<header class="flex items-center gap-base mb-card-gap">
+<a class="w-12 h-12 flex items-center justify-center rounded-full bg-white border-[1.5px] border-black hover:scale-105 transition-transform duration-300 shadow-[0_10px_20px_rgba(0,0,0,0.05)]" href="1.html">
+<span class="material-symbols-outlined text-primary" data-icon="arrow_back" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</a>
+<div class="liquid-card px-container-padding py-base flex-1 flex items-center justify-between">
+<h1 class="font-headline-lg text-headline-lg text-primary md:font-headline-lg md:text-headline-lg font-headline-lg-mobile text-headline-lg-mobile">ร้านกะเพราป้าแดง</h1>
+<span class="font-label-caps text-label-caps text-secondary px-3 py-1 bg-surface-container rounded-full">โรงอาหารกลาง</span>
+</div>
+</header>
+<!-- Menu Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-card-gap mt-[40px]" id="menu-grid">
+<!-- Menu items will be dynamically loaded here -->
+</div>
+</main>
+<!-- Footer -->
+<footer class="absolute bottom-0 w-full bg-surface dark:bg-surface-container-highest border-t border-outline-variant py-12 mt-[100px]">
+<div class="flex flex-col md:flex-row justify-between items-center px-container-padding max-w-7xl mx-auto gap-8">
+<div class="font-headline-lg-mobile text-headline-lg-mobile text-primary">Campus Nutrition Analyzer</div>
+<div class="flex gap-6 font-label-caps text-label-caps text-secondary dark:text-on-secondary-container">
+<a class="hover:text-primary dark:hover:text-white transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary dark:hover:text-white transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-primary dark:hover:text-white transition-colors" href="#">Contact Support</a>
+</div>
+<div class="font-label-caps text-label-caps text-secondary dark:text-on-secondary-container">
+                © 2024 Campus Nutrition Analyzer. All rights reserved.
+            </div>
+</div>
+</footer>
+<script>
+    const restaurantData = {
+      'pra-daeng': {
+        name: 'ร้านกะเพราป้าแดง',
+        location: 'โรงอาหารกลาง',
+        type: 'อาหารตามสั่ง'
+      },
+      'green-bowl': {
+        name: 'Green Bowl Salad',
+        location: 'ตึกวิทยาศาสตร์',
+        type: 'อาหารเพื่อสุขภาพ'
+      },
+      'noodle-boat': {
+        name: 'เตี๋ยวเรือรสเด็ด',
+        location: 'อาคารเรียนรวม',
+        type: 'ก๋วยเตี๋ยว'
+      },
+      'caffeine-lab': {
+        name: 'Caffeine Lab',
+        location: 'ห้องสมุด',
+        type: 'เครื่องดื่ม / คาเฟ่'
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const restaurantId = params.get('restaurant') || 'pra-daeng';
+      const restaurant = JSON.parse(localStorage.getItem('selectedRestaurant') || '{}');
+
+      if (restaurant.id) {
+        document.querySelector('header .liquid-card h1').textContent = restaurant.name;
+        document.querySelector('header .liquid-card span').textContent = restaurant.location;
+      }
+
+      // Restaurant menu mapping
+      const restaurantMenus = {
+        'pra-daeng': ['krapow-gai-khai-dao', 'omelet-pork', 'tom-yum-goong', 'khao-pad-moo'],
+        'green-bowl': ['green-bowl-salad', 'quinoa-bowl', 'fruit-salad'],
+        'noodle-boat': ['boat-noodle', 'yen-ta-fo', 'tom-yum-noodle'],
+        'central-cafe': ['pad-thai', 'khao-khaeng-moo', 'sushi-set'],
+        'science-cafe': ['caesar-salad', 'fruit-smoothie', 'grilled-chicken-salad'],
+        'academic-cafe': ['khao-klook-kapi', 'spaghetti-carbonara', 'fried-chicken-rice'],
+        'caffeine-lab': ['iced-latte', 'matcha-latte', 'cold-brew']
+      };
+
+      // Dish data (same as 3.html)
+      const dishData = {
+        'krapow-gai-khai-dao': {
+          name: 'ข้าวกะเพราไก่ไข่ดาว',
+          price: '50 THB',
+          kcal: 520,
+          image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA21-1rhJ-s_t71kgkRlNEYBN9bhkciDrBqqGUCH2xZsMPUl4yCo2095J4RXDjqiuTak19ztGcNyU-fH3KiVNM19crNsm1iXXpLHYYHEXrM_HHbspltKb69I3mWWJw-Md_TB9rJXbFWwWSv_NIX8rfrxRC4EeGXXSs0C3FVWs8Jy44oEi4w1ykTX460fibgYeu56QpOsSaVvLU5r0RdLB-YiXa94zcF261v-TWepE2Y5LbCaYSNJq5E'
+        },
+        'pad-thai': {
+          name: 'ผัดไทย',
+          price: '50 THB',
+          kcal: 480,
+          image: 'https://via.placeholder.com/400x300?text=Pad+Thai'
+        },
+        'khao-khaeng-moo': {
+          name: 'ข้าวแกงหมู',
+          price: '45 THB',
+          kcal: 420,
+          image: 'https://via.placeholder.com/400x300?text=Curry+Pork'
+        },
+        'sushi-set': {
+          name: 'เซ็ตซูชิ',
+          price: '120 THB',
+          kcal: 380,
+          image: 'https://via.placeholder.com/400x300?text=Sushi+Set'
+        },
+        'caesar-salad': {
+          name: 'สลัดซีซาร์',
+          price: '60 THB',
+          kcal: 320,
+          image: 'https://via.placeholder.com/400x300?text=Caesar+Salad'
+        },
+        'fruit-smoothie': {
+          name: 'สมูทตี้ผลไม้',
+          price: '45 THB',
+          kcal: 180,
+          image: 'https://via.placeholder.com/400x300?text=Fruit+Smoothie'
+        },
+        'grilled-chicken-salad': {
+          name: 'สลัดไก่ย่าง',
+          price: '70 THB',
+          kcal: 280,
+          image: 'https://via.placeholder.com/400x300?text=Grilled+Chicken+Salad'
+        },
+        'khao-klook-kapi': {
+          name: 'ข้าวคลุกกะปิ',
+          price: '40 THB',
+          kcal: 450,
+          image: 'https://via.placeholder.com/400x300?text=Khao+Klook+Kapi'
+        },
+        'spaghetti-carbonara': {
+          name: 'สปาเก็ตตีคาร์บอนารา',
+          price: '80 THB',
+          kcal: 550,
+          image: 'https://via.placeholder.com/400x300?text=Spaghetti+Carbonara'
+        },
+        'fried-chicken-rice': {
+          name: 'ข้าวไก่ทอด',
+          price: '50 THB',
+          kcal: 520,
+          image: 'https://via.placeholder.com/400x300?text=Fried+Chicken+Rice'
+        }
+      };
+
+      // Load menu items dynamically
+      const menuGrid = document.getElementById('menu-grid');
+      const menuItems = restaurantMenus[restaurantId] || restaurantMenus['pra-daeng'];
+
+      menuItems.forEach(dishId => {
+        const dish = dishData[dishId];
+        if (!dish) return;
+
+        const card = document.createElement('a');
+        card.className = 'liquid-card p-[32px] group hover:scale-[1.02] transition-transform duration-300 flex flex-col gap-base cursor-pointer';
+        card.href = `3.html?restaurant=${restaurantId}&dish=${dishId}`;
+        card.setAttribute('data-dish-id', dishId);
+
+        card.innerHTML = `
+          <div class="w-full h-48 rounded-2xl overflow-hidden relative mb-base">
+            <img class="object-cover w-full h-full" src="${dish.image}" alt="${dish.name}"/>
+          </div>
+          <div class="flex justify-between items-start">
+            <h2 class="font-stats-num text-stats-num text-primary">${dish.name}</h2>
+            <span class="font-stats-num text-stats-num text-primary">${dish.price}</span>
+          </div>
+          <div class="flex items-center gap-base mt-auto pt-base border-t border-outline-variant">
+            <div class="flex items-center gap-2 px-3 py-1 bg-black rounded-full text-white">
+              <span class="material-symbols-outlined text-sm" data-icon="local_fire_department" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+              <span class="font-label-caps text-label-caps">${dish.kcal} kcal</span>
+            </div>
+            <button class="ml-auto w-10 h-10 flex items-center justify-center rounded-full bg-surface border-[1.5px] border-black group-hover:bg-black group-hover:text-white transition-colors duration-300 pointer-events-none">
+              <span class="material-symbols-outlined" data-icon="arrow_forward" style="font-variation-settings: 'FILL' 0;">arrow_forward</span>
+            </button>
+          </div>
+        `;
+
+        menuGrid.appendChild(card);
+      });
+
+      // Handle login button
+      const loginBtn = document.getElementById('login-btn');
+      const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+      
+      if (currentUser.email) {
+        loginBtn.textContent = 'ออกจากระบบ';
+        loginBtn.addEventListener('click', () => {
+          localStorage.removeItem('currentUser');
+          window.location.reload();
+        });
+      } else {
+        loginBtn.addEventListener('click', () => {
+          window.location.href = 'login.html';
+        });
+      }
+    });
+</script>
+</body></html>

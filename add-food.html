@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="th"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title="เพิ่มอาหาร - Campus Nutrition Analyzer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#83838c",
+                        "surface-container-highest": "#e2e2e3",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "inverse-primary": "#c6c6c6",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#c6c5cf",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "surface-bright": "#f9f9fa",
+                        "inverse-surface": "#2f3132",
+                        "on-primary-fixed-variant": "#474747",
+                        "surface": "#f9f9fa",
+                        "on-secondary-container": "#616363",
+                        "surface-dim": "#dadadb",
+                        "secondary": "#5d5f5f",
+                        "on-primary-fixed": "#1b1b1b",
+                        "tertiary-fixed": "#e3e1ec",
+                        "surface-container": "#eeeeef",
+                        "tertiary-container": "#1a1b22",
+                        "inverse-on-surface": "#f0f1f2",
+                        "tertiary": "#000000",
+                        "background": "#f9f9fa",
+                        "surface-variant": "#e2e2e3",
+                        "on-surface-variant": "#4c4546",
+                        "on-surface": "#1a1c1d",
+                        "on-tertiary-fixed-variant": "#46464e",
+                        "surface-container-high": "#e8e8e9",
+                        "primary-fixed": "#e2e2e2",
+                        "secondary-container": "#dfe0e0",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-variant": "#cfc4c5",
+                        "secondary-fixed": "#e2e2e2",
+                        "primary": "#000000",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#f3f3f4",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#454747",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "outline": "#7e7576",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#848484",
+                        "on-background": "#1a1c1d",
+                        "on-tertiary-fixed": "#1a1b22",
+                        "surface-tint": "#5e5e5e",
+                        "primary-container": "#1b1b1b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "3xl": "1.5rem"
+                    },
+                    "spacing": {
+                        "container-padding": "24px",
+                        "section-gap": "48px",
+                        "gutter": "16px",
+                        "card-gap": "20px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Kanit"],
+                        "display-lg": ["Kanit"],
+                        "headline-lg-mobile": ["Kanit"],
+                        "headline-lg": ["Kanit"],
+                        "stats-num": ["Kanit"],
+                        "body-md": ["Kanit"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "stats-num": ["24px", { "lineHeight": "1", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Kanit', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background-color: #f9f9fa;
+        }
+
+        .liquid-card {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        .bg-blob {
+            position: absolute;
+            background-color: #E0E0E0;
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .input-underline {
+            border: none;
+            border-bottom: 1px solid #cfc4c5;
+            background: transparent;
+            padding: 8px 0;
+            transition: border-color 0.3s ease;
+            width: 100%;
+        }
+
+        .input-underline:focus {
+            outline: none;
+            border-bottom-color: #000000;
+            box-shadow: none;
+        }
+
+        .option-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+        }
+
+        .option-card.selected {
+            border-color: #000000;
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="text-on-background min-h-screen relative overflow-x-hidden font-body-md text-body-md">
+<!-- Decorative Background Blobs -->
+<div class="bg-blob w-[500px] h-[500px] top-[-100px] left-[-100px]"></div>
+<div class="bg-blob w-[600px] h-[600px] bottom-[200px] right-[-200px]"></div>
+<div class="bg-blob w-[400px] h-[400px] top-[40%] left-[20%]"></div>
+<!-- TopNavBar -->
+<nav class="fixed top-5 left-1/2 -translate-x-1/2 w-[calc(100%-40px)] max-w-7xl rounded-full bg-white/80 backdrop-blur-xl border-[1.5px] border-black shadow-[0_20px_40px rgba(0,0,0,0.05)] flex justify-between items-center px-8 py-3 z-50 transition-transform duration-300">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+<span class="font-headline-lg text-headline-lg tracking-tighter text-primary hidden md:block">Campus Nutrition Analyzer</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile tracking-tighter text-primary md:hidden">CNA</span>
+</div>
+<div class="flex items-center gap-6">
+<a class="text-primary font-body-md text-body-md font-semibold hover:scale-105 transition-transform duration-300" href="4.html">แดชบอร์ด</a>
+<a class="text-primary font-body-md text-body-md font-semibold hover:scale-105 transition-transform duration-300" href="history.html">ประวัติ</a>
+<a class="text-primary font-body-md text-body-md font-semibold hover:scale-105 transition-transform duration-300" href="profile.html">โปรไฟล์</a>
+<button class="text-primary font-body-md text-body-md font-semibold hover:scale-105 transition-transform duration-300" id="logout-btn">ออกจากระบบ</button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="pt-[120px] pb-section-gap px-container-padding max-w-7xl mx-auto min-h-[calc(100vh-200px)] relative z-10">
+<div class="max-w-4xl mx-auto">
+<!-- Header -->
+<div class="text-center mb-12">
+<h1 class="font-display-lg text-display-lg text-primary mb-4">เพิ่มอาหาร</h1>
+<p class="font-body-md text-body-md text-secondary">เลือกวิธีเพิ่มอาหารที่คุณต้องการ</p>
+</div>
+<!-- Option Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+<!-- Option 1: Browse Restaurants -->
+<div class="liquid-card rounded-3xl p-8 option-card" id="option-browse">
+<div class="text-center mb-6">
+<span class="material-symbols-outlined text-6xl text-primary mb-4" style="font-variation-settings: 'FILL' 1;">store</span>
+<h2 class="font-headline-lg text-headline-lg text-primary mb-2">เลือกจากร้านอาหาร</h2>
+<p class="font-body-md text-body-md text-secondary">ค้นหาและเลือกอาหารจากร้านค้าในวิทยาเขต</p>
+</div>
+<button class="w-full bg-primary text-on-primary rounded-full py-4 font-label-caps text-label-caps hover:scale-105 transition-transform duration-300 shadow-[0_10px_20px rgba(0,0,0,0.1)]">
+                    ค้นหาร้านอาหาร
+                </button>
+</div>
+<!-- Option 2: Manual Entry -->
+<div class="liquid-card rounded-3xl p-8 option-card" id="option-manual">
+<div class="text-center mb-6">
+<span class="material-symbols-outlined text-6xl text-primary mb-4" style="font-variation-settings: 'FILL' 1;">edit_note</span>
+<h2 class="font-headline-lg text-headline-lg text-primary mb-2">กรอกข้อมูลเอง</h2>
+<p class="font-body-md text-body-md text-secondary">กรอกชื่ออาหารและแคลอรี่ด้วยตนเอง</p>
+</div>
+<button class="w-full bg-surface text-primary border-[1.5px] border-primary rounded-full py-4 font-label-caps text-label-caps hover:bg-surface-variant transition-colors">
+                    กรอกข้อมูล
+                </button>
+</div>
+</div>
+<!-- Manual Entry Form (Hidden by default) -->
+<div class="liquid-card rounded-3xl p-8 hidden" id="manual-form">
+<div class="flex items-center gap-4 mb-6">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-white border-[1.5px] border-black hover:scale-105 transition-transform duration-300 shadow-[0_10px_20px rgba(0,0,0,0.05)]" id="back-to-options">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<h2 class="font-headline-lg text-headline-lg text-primary">กรอกข้อมูลอาหาร</h2>
+</div>
+<form class="flex flex-col gap-6" id="manual-entry-form">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col">
+<label class="font-label-caps text-label-caps text-secondary mb-2">ชื่ออาหาร</label>
+<input class="input-underline font-body-md text-body-md text-primary" id="food-name" placeholder="ชื่ออาหาร" required="" type="text"/>
+</div>
+<div class="flex flex-col">
+<label class="font-label-caps text-label-caps text-secondary mb-2">แคลอรี่ (kcal)</label>
+<input class="input-underline font-stats-num text-stats-num text-primary" id="food-calories" placeholder="350" required="" type="number"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col">
+<label class="font-label-caps text-label-caps text-secondary mb-2">มื้ออาหาร</label>
+<select class="input-underline font-body-md text-body-md text-primary" id="meal-type">
+<option value="breakfast">มื้อเช้า</option>
+<option value="lunch" selected>มื้อเที่ยง</option>
+<option value="dinner">มื้อเย็น</option>
+<option value="snack">ของว่าง</option>
+</select>
+</div>
+<div class="flex flex-col">
+<label class="font-label-caps text-label-caps text-secondary mb-2">อัพโหลดรูป (ไม่บังคับ)</label>
+<input class="input-underline font-body-md text-body-md text-primary" id="food-image" type="file" accept="image/*"/>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="bg-primary text-on-primary rounded-full py-3 px-6 font-label-caps text-label-caps hover:scale-105 transition-transform duration-300" type="submit">
+                        เพิ่มรายการ
+                    </button>
+<button class="bg-surface text-primary border-[1.5px] border-primary rounded-full py-3 px-6 font-label-caps text-label-caps hover:bg-surface-variant transition-colors" id="cancel-manual" type="button">
+                        ยกเลิก
+                    </button>
+</div>
+</form>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface text-secondary border-t border-outline-variant w-full py-12 flex flex-col md:flex-row justify-between items-center px-container-padding max-w-7xl mx-auto gap-8 relative z-50">
+<div class="font-headline-lg-mobile text-headline-lg-mobile text-primary">
+            Campus Nutrition Analyzer
+        </div>
+<div class="flex gap-6 font-label-caps text-label-caps">
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-primary transition-colors" href="#">Contact Support</a>
+</div>
+<div class="font-label-caps text-label-caps">
+            © 2024 Campus Nutrition Analyzer. All rights reserved.
+        </div>
+</footer>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+
+            // Check if user is logged in
+            if (!currentUser.email) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Option card click handlers
+            const optionBrowse = document.getElementById('option-browse');
+            const optionManual = document.getElementById('option-manual');
+            const manualForm = document.getElementById('manual-form');
+            const backToOptions = document.getElementById('back-to-options');
+            const cancelManual = document.getElementById('cancel-manual');
+
+            // Browse restaurants option
+            optionBrowse.addEventListener('click', () => {
+                window.location.href = '1.html';
+            });
+
+            // Manual entry option
+            optionManual.addEventListener('click', () => {
+                document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2').classList.add('hidden');
+                manualForm.classList.remove('hidden');
+            });
+
+            // Back to options
+            backToOptions.addEventListener('click', () => {
+                manualForm.classList.add('hidden');
+                document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2').classList.remove('hidden');
+            });
+
+            cancelManual.addEventListener('click', () => {
+                manualForm.classList.add('hidden');
+                document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2').classList.remove('hidden');
+            });
+
+            // Handle manual form submission
+            document.getElementById('manual-entry-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const foodName = document.getElementById('food-name').value;
+                const foodCalories = parseInt(document.getElementById('food-calories').value);
+                const mealType = document.getElementById('meal-type').value;
+                const imageFile = document.getElementById('food-image').files[0];
+
+                // Handle image upload (optional)
+                let imageData = null;
+                if (imageFile) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        imageData = event.target.result;
+                        saveFoodEntry(foodName, foodCalories, mealType, imageData);
+                    };
+                    reader.readAsDataURL(imageFile);
+                } else {
+                    saveFoodEntry(foodName, foodCalories, mealType, null);
+                }
+            });
+
+            function saveFoodEntry(name, calories, type, image) {
+                const today = new Date().toISOString().split('T')[0];
+                const dailyLogs = JSON.parse(localStorage.getItem('dailyLogs') || '{}');
+
+                if (!dailyLogs[today]) {
+                    dailyLogs[today] = { meals: [], totalCalories: 0 };
+                }
+
+                const newMeal = {
+                    name: name,
+                    calories: calories,
+                    type: type,
+                    image: image,
+                    timestamp: new Date().toISOString()
+                };
+
+                dailyLogs[today].meals.push(newMeal);
+                dailyLogs[today].totalCalories = dailyLogs[today].meals.reduce((sum, meal) => sum + meal.calories, 0);
+
+                localStorage.setItem('dailyLogs', JSON.stringify(dailyLogs));
+
+                // Reset form and show options
+                document.getElementById('food-name').value = '';
+                document.getElementById('food-calories').value = '';
+                document.getElementById('food-image').value = '';
+                manualForm.classList.add('hidden');
+                document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2').classList.remove('hidden');
+
+                // Redirect to dashboard
+                window.location.href = '4.html';
+            }
+
+            // Logout functionality
+            document.getElementById('logout-btn').addEventListener('click', () => {
+                localStorage.removeItem('currentUser');
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
+</body></html>

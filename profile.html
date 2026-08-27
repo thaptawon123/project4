@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="th"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>โปรไฟล์ - Campus Nutrition Analyzer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#83838c",
+                        "surface-container-highest": "#e2e2e3",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "inverse-primary": "#c6c6c6",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#c6c5cf",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "surface-bright": "#f9f9fa",
+                        "inverse-surface": "#2f3132",
+                        "on-primary-fixed-variant": "#474747",
+                        "surface": "#f9f9fa",
+                        "on-secondary-container": "#616363",
+                        "surface-dim": "#dadadb",
+                        "secondary": "#5d5f5f",
+                        "on-primary-fixed": "#1b1b1b",
+                        "tertiary-fixed": "#e3e1ec",
+                        "surface-container": "#eeeeef",
+                        "tertiary-container": "#1a1b22",
+                        "inverse-on-surface": "#f0f1f2",
+                        "tertiary": "#000000",
+                        "background": "#f9f9fa",
+                        "surface-variant": "#e2e2e3",
+                        "on-surface-variant": "#4c4546",
+                        "on-surface": "#1a1c1d",
+                        "on-tertiary-fixed-variant": "#46464e",
+                        "surface-container-high": "#e8e8e9",
+                        "primary-fixed": "#e2e2e2",
+                        "secondary-container": "#dfe0e0",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-variant": "#cfc4c5",
+                        "secondary-fixed": "#e2e2e2",
+                        "primary": "#000000",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#f3f3f4",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#454747",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "outline": "#7e7576",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#848484",
+                        "on-background": "#1a1c1d",
+                        "on-tertiary-fixed": "#1a1b22",
+                        "surface-tint": "#5e5e5e",
+                        "primary-container": "#1b1b1b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "3xl": "1.5rem"
+                    },
+                    "spacing": {
+                        "container-padding": "24px",
+                        "section-gap": "48px",
+                        "gutter": "16px",
+                        "card-gap": "20px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Kanit"],
+                        "display-lg": ["Kanit"],
+                        "headline-lg-mobile": ["Kanit"],
+                        "headline-lg": ["Kanit"],
+                        "stats-num": ["Kanit"],
+                        "body-md": ["Kanit"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "stats-num": ["24px", { "lineHeight": "1", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Kanit', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background-color: #f9f9fa;
+        }
+
+        .liquid-card {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        .bg-blob {
+            position: absolute;
+            background-color: #E0E0E0;
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .input-underline {
+            border: none;
+            border-bottom: 1px solid #cfc4c5;
+            background: transparent;
+            padding: 8px 0;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-underline:focus {
+            outline: none;
+            border-bottom-color: #000000;
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body class="text-on-background min-h-screen relative overflow-x-hidden font-body-md text-body-md">
+<!-- Decorative Background Blobs -->
+<div class="bg-blob w-[500px] h-[500px] top-[-100px] left-[-100px]"></div>
+<div class="bg-blob w-[600px] h-[600px] bottom-[200px] right-[-200px]"></div>
+<div class="bg-blob w-[400px] h-[400px] top-[40%] left-[20%]"></div>
+<!-- TopNavBar -->
+<nav class="fixed top-5 left-1/2 -translate-x-1/2 w-[calc(100%-40px)] max-w-7xl rounded-full bg-white/80 backdrop-blur-xl border-[1.5px] border-black shadow-[0_20px_40px_rgba(0,0,0,0.05)] flex justify-between items-center px-8 py-3 z-50 transition-transform duration-300">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+<span class="font-headline-lg text-headline-lg tracking-tighter text-primary hidden md:block">Campus Nutrition Analyzer</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile tracking-tighter text-primary md:hidden">CNA</span>
+</div>
+<div class="flex items-center gap-6">
+<a class="text-primary font-body-md text-body-md font-semibold hover:scale-105 transition-transform duration-300" href="4.html">แดชบอร์ด</a>
+<button class="text-primary font-body-md text-body-md font-semibold hover:scale-105 transition-transform duration-300" id="logout-btn">ออกจากระบบ</button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="pt-[120px] pb-section-gap px-container-padding max-w-7xl mx-auto min-h-[calc(100vh-200px)] relative z-10">
+<div class="max-w-2xl mx-auto">
+<!-- Profile Header -->
+<div class="text-center mb-12">
+<h1 class="font-display-lg text-display-lg text-primary mb-4">โปรไฟล์ของคุณ</h1>
+<p class="font-body-md text-body-md text-secondary">กรอกข้อมูลส่วนตัวเพื่อคำนวณแคลอรี่ที่เหมาะสม</p>
+</div>
+<!-- Profile Form Card -->
+<div class="liquid-card rounded-3xl p-10 mb-8">
+<form class="flex flex-col gap-8" id="profile-form">
+<div class="flex items-center gap-6 mb-4">
+<div class="w-20 h-20 rounded-full bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-primary">person</span>
+</div>
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary" id="user-name">-</h2>
+<p class="font-body-md text-body-md text-secondary" id="user-email">-</p>
+</div>
+</div>
+<div class="h-px bg-outline-variant"></div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="flex flex-col">
+<label class="font-label-caps text-label-caps text-secondary mb-2" for="weight">น้ำหนัก (กก.)</label>
+<input class="input-underline font-stats-num text-stats-num text-primary" id="weight" placeholder="65" required="" type="number" step="0.1"/>
+</div>
+<div class="flex flex-col">
+<label class="font-label-caps text-label-caps text-secondary mb-2" for="height">ส่วนสูง (ซม.)</label>
+<input class="input-underline font-stats-num text-stats-num text-primary" id="height" placeholder="170" required="" type="number"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="flex flex-col">
+<label class="font-label-caps text-label-caps text-secondary mb-2" for="age">อายุ</label>
+<input class="input-underline font-stats-num text-stats-num text-primary" id="age" placeholder="20" required="" type="number"/>
+</div>
+<div class="flex flex-col">
+<label class="font-label-caps text-label-caps text-secondary mb-2" for="gender">เพศ</label>
+<select class="input-underline font-body-md text-body-md text-primary" id="gender" required="">
+<option value="">เลือกเพศ</option>
+<option value="male">ชาย</option>
+<option value="female">หญิง</option>
+</select>
+</div>
+</div>
+<div class="flex flex-col">
+<label class="font-label-caps text-label-caps text-secondary mb-2" for="activity">ระดับกิจกรรม</label>
+<select class="input-underline font-body-md text-body-md text-primary" id="activity" required="">
+<option value="">เลือกระดับกิจกรรม</option>
+<option value="1.2">นั่งทำงาน (ไม่ออกกำลังกาย)</option>
+<option value="1.375">ออกกำลังกายเบาๆ (1-3 วัน/สัปดาห์)</option>
+<option value="1.55">ออกกำลังกายปานกลาง (3-5 วัน/สัปดาห์)</option>
+<option value="1.725">ออกกำลังกายหนัก (6-7 วัน/สัปดาห์)</option>
+<option value="1.9">ออกกำลังกายหนักมาก (ทุกวัน)</option>
+</select>
+</div>
+<button class="bg-primary text-on-primary rounded-full py-4 mt-4 font-label-caps text-label-caps hover:scale-105 transition-transform duration-300 shadow-[0_10px_20px_rgba(0,0,0,0.1)]" type="submit">
+                    บันทึกและคำนวณแคลอรี่
+                </button>
+</form>
+</div>
+<!-- Calorie Result Card -->
+<div class="liquid-card rounded-3xl p-10 hidden" id="calorie-result">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-6 text-center">แคลอรี่ที่คุณต้องการต่อวัน</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+<div class="bg-surface/50 rounded-2xl p-6 border border-outline-variant/30">
+<p class="font-label-caps text-label-caps text-secondary mb-2">BMR</p>
+<p class="font-display-lg text-[40px] text-primary" id="bmr-value">-</p>
+<p class="font-label-caps text-label-caps text-secondary">kcal/วัน</p>
+</div>
+<div class="bg-surface/50 rounded-2xl p-6 border border-outline-variant/30">
+<p class="font-label-caps text-label-caps text-secondary mb-2">TDEE</p>
+<p class="font-display-lg text-[40px] text-primary" id="tdee-value">-</p>
+<p class="font-label-caps text-label-caps text-secondary">kcal/วัน</p>
+</div>
+<div class="bg-surface/50 rounded-2xl p-6 border border-outline-variant/30">
+<p class="font-label-caps text-label-caps text-secondary mb-2">เป้าหมาย</p>
+<p class="font-display-lg text-[40px] text-primary" id="goal-value">-</p>
+<p class="font-label-caps text-label-caps text-secondary">kcal/วัน</p>
+</div>
+</div>
+<div class="mt-8 text-center">
+<a class="inline-block bg-primary text-on-primary rounded-full py-3 px-8 font-label-caps text-label-caps hover:scale-105 transition-transform duration-300 shadow-[0_10px_20px rgba(0,0,0,0.1)]" href="4.html">
+                    ไปที่แดชบอร์ด
+                </a>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface text-secondary border-t border-outline-variant w-full py-12 flex flex-col md:flex-row justify-between items-center px-container-padding max-w-7xl mx-auto gap-8 relative z-50">
+<div class="font-headline-lg-mobile text-headline-lg-mobile text-primary">
+            Campus Nutrition Analyzer
+        </div>
+<div class="flex gap-6 font-label-caps text-label-caps">
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-primary transition-colors" href="#">Contact Support</a>
+</div>
+<div class="font-label-caps text-label-caps">
+            © 2024 Campus Nutrition Analyzer. All rights reserved.
+        </div>
+</footer>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load user data
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+            const profileData = JSON.parse(localStorage.getItem('profileData') || '{}');
+
+            // Display user info
+            if (currentUser.name) {
+                document.getElementById('user-name').textContent = currentUser.name;
+            }
+            if (currentUser.email) {
+                document.getElementById('user-email').textContent = currentUser.email;
+            }
+
+            // Load saved profile data
+            if (profileData.weight) {
+                document.getElementById('weight').value = profileData.weight;
+            }
+            if (profileData.height) {
+                document.getElementById('height').value = profileData.height;
+            }
+            if (profileData.age) {
+                document.getElementById('age').value = profileData.age;
+            }
+            if (profileData.gender) {
+                document.getElementById('gender').value = profileData.gender;
+            }
+            if (profileData.activity) {
+                document.getElementById('activity').value = profileData.activity;
+            }
+
+            // Show calorie result if data exists
+            if (profileData.calories) {
+                document.getElementById('calorie-result').classList.remove('hidden');
+                document.getElementById('bmr-value').textContent = profileData.bmr;
+                document.getElementById('tdee-value').textContent = profileData.tdee;
+                document.getElementById('goal-value').textContent = profileData.calories;
+            }
+
+            // Calculate BMR using Mifflin-St Jeor Equation
+            function calculateBMR(weight, height, age, gender) {
+                if (gender === 'male') {
+                    return (10 * weight) + (6.25 * height) - (5 * age) + 5;
+                } else {
+                    return (10 * weight) + (6.25 * height) - (5 * age) - 161;
+                }
+            }
+
+            // Handle form submission
+            document.getElementById('profile-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const weight = parseFloat(document.getElementById('weight').value);
+                const height = parseFloat(document.getElementById('height').value);
+                const age = parseInt(document.getElementById('age').value);
+                const gender = document.getElementById('gender').value;
+                const activity = parseFloat(document.getElementById('activity').value);
+
+                // Calculate BMR
+                const bmr = calculateBMR(weight, height, age, gender);
+                const tdee = Math.round(bmr * activity);
+                const goalCalories = tdee; // Can be adjusted for weight loss/gain goals
+
+                // Save profile data
+                const newProfileData = {
+                    weight,
+                    height,
+                    age,
+                    gender,
+                    activity,
+                    bmr: Math.round(bmr),
+                    tdee,
+                    calories: goalCalories,
+                    updatedAt: new Date().toISOString()
+                };
+
+                localStorage.setItem('profileData', JSON.stringify(newProfileData));
+
+                // Display results
+                document.getElementById('calorie-result').classList.remove('hidden');
+                document.getElementById('bmr-value').textContent = Math.round(bmr);
+                document.getElementById('tdee-value').textContent = tdee;
+                document.getElementById('goal-value').textContent = goalCalories;
+            });
+
+            // Logout functionality
+            document.getElementById('logout-btn').addEventListener('click', () => {
+                localStorage.removeItem('currentUser');
+                window.location.href = 'login.html';
+            });
+
+            // Check if user is logged in
+            if (!currentUser.email) {
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+</body></html>
