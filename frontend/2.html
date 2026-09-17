@@ -248,7 +248,7 @@
       }
     };
 
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
       const params = new URLSearchParams(window.location.search);
       const restaurantId = params.get('restaurant') || 'pra-daeng';
       const restaurant = JSON.parse(localStorage.getItem('selectedRestaurant') || '{}');
@@ -333,18 +333,22 @@
         }
       };
 
+      const menuResponse = await fetch(`/api/menu/${restaurantId}`);
+      const databaseMenuItems = menuResponse.ok ? await menuResponse.json() : [];
+
       // Load menu items dynamically
       const menuGrid = document.getElementById('menu-grid');
-      const menuItems = restaurantMenus[restaurantId] || restaurantMenus['pra-daeng'];
+      const menuItems = databaseMenuItems.length
+        ? databaseMenuItems
+        : (restaurantMenus[restaurantId] || restaurantMenus['pra-daeng']).map((dishId) => dishData[dishId]);
 
-      menuItems.forEach(dishId => {
-        const dish = dishData[dishId];
+      menuItems.forEach((dish) => {
         if (!dish) return;
 
         const card = document.createElement('a');
         card.className = 'liquid-card p-[32px] group hover:scale-[1.02] transition-transform duration-300 flex flex-col gap-base cursor-pointer';
-        card.href = `3.html?restaurant=${restaurantId}&dish=${dishId}`;
-        card.setAttribute('data-dish-id', dishId);
+        card.href = `3.html?restaurant=${restaurantId}&dish=${dish.id}`;
+        card.setAttribute('data-dish-id', dish.id);
 
         card.innerHTML = `
           <div class="w-full h-48 rounded-2xl overflow-hidden relative mb-base">
@@ -352,7 +356,7 @@
           </div>
           <div class="flex justify-between items-start">
             <h2 class="font-stats-num text-stats-num text-primary">${dish.name}</h2>
-            <span class="font-stats-num text-stats-num text-primary">${dish.price}</span>
+            <span class="font-stats-num text-stats-num text-primary">${dish.price} THB</span>
           </div>
           <div class="flex items-center gap-base mt-auto pt-base border-t border-outline-variant">
             <div class="flex items-center gap-2 px-3 py-1 bg-black rounded-full text-white">

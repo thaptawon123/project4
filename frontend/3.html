@@ -482,11 +482,14 @@
     }
   };
 
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', async () => {
     const params = new URLSearchParams(window.location.search);
     const restaurantId = params.get('restaurant') || 'pra-daeng';
     const dishId = params.get('dish') || 'krapow-gai-khai-dao';
-    const dish = dishData[dishId] || dishData['krapow-gai-khai-dao'];
+    const dishResponse = await fetch(`/api/menu/item/${dishId}`);
+    const dish = dishResponse.ok
+      ? await dishResponse.json()
+      : (dishData[dishId] || dishData['krapow-gai-khai-dao']);
 
     const restaurantName = JSON.parse(localStorage.getItem('selectedRestaurant') || '{}').name || 'ร้านกะเพราป้าแดง';
     const backLink = document.getElementById('back-link');

@@ -306,40 +306,53 @@
             });
 
             // Handle login form submission
-            document.getElementById('login-form').addEventListener('submit', (e) => {
+            document.getElementById('login-form').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const email = document.getElementById('email').value;
                 const password = document.getElementById('password').value;
 
-                // Simple validation (in real app, this would be server-side)
                 if (email && password) {
-                    // Store user session in localStorage
-                    localStorage.setItem('currentUser', JSON.stringify({ email }));
-                    // Redirect to profile page
+                    const response = await fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, password })
+                    });
+
+                    if (!response.ok) {
+                        alert('เข้าสู่ระบบไม่สำเร็จ');
+                        return;
+                    }
+
+                    const result = await response.json();
+                    localStorage.setItem('currentUser', JSON.stringify(result.user));
+                    localStorage.setItem('authToken', result.token);
                     window.location.href = 'profile.html';
                 }
             });
 
             // Handle signup form submission
-            document.getElementById('register-form').addEventListener('submit', (e) => {
+            document.getElementById('register-form').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const name = document.getElementById('signup-name').value;
                 const email = document.getElementById('signup-email').value;
                 const password = document.getElementById('signup-password').value;
 
-                // Simple validation (in real app, this would be server-side)
                 if (name && email && password) {
-                    // Store user data in localStorage
-                    const userData = {
-                        name,
-                        email,
-                        password,
-                        createdAt: new Date().toISOString()
-                    };
-                    localStorage.setItem('userData', JSON.stringify(userData));
-                    localStorage.setItem('currentUser', JSON.stringify({ email, name }));
+                    const response = await fetch('/api/auth/register', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name, email, password })
+                    });
 
-                    // Redirect to profile page
+                    if (!response.ok) {
+                        alert('สมัครสมาชิกไม่สำเร็จ');
+                        return;
+                    }
+
+                    const result = await response.json();
+                    localStorage.setItem('userData', JSON.stringify({ name, email }));
+                    localStorage.setItem('currentUser', JSON.stringify(result.user));
+                    localStorage.setItem('authToken', result.token);
                     window.location.href = 'profile.html';
                 }
             });
